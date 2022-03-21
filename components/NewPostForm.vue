@@ -46,7 +46,7 @@
         methods: {
             onSubmit(event) {
                 event.preventDefault()
-                JSON.stringify(this.form)
+                console.log(JSON.stringify(this.form))
             },
         }
     }

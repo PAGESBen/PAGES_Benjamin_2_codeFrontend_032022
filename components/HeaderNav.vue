@@ -1,5 +1,5 @@
 <template>
-    <b-navbar class= "w-100 d-flex justify-content-between" type="dark" variant="dark" >
+    <b-navbar align-h='center' class= "w-100 d-flex justify-content-between" type="dark" variant="dark" >
         
         <b-navbar-brand>
             <IconLeftWhite/>
