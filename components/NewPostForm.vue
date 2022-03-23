@@ -7,13 +7,13 @@
                 label="Post your message:"
                 label-for="post"
                 >
-                    <b-form-input
+                    <b-form-textarea
                     id="post"
                     v-model="form.post.textMessage"
-                    type="text"
+                    type="textarea"
                     placeholder="add your comment"
                     required
-                    ></b-form-input>
+                    ></b-form-textarea>
                 </b-form-group>
 
                 <b-form-file
