@@ -5,7 +5,7 @@
             <b-row cols="2">
                 <b-col>
                     <b-card-title>
-                        <b-img fluid src="../assets/defaultProfile.PNG.png" class='profilImage border-1 border-primary' rounded="circle" alt="Circle image"></b-img>
+                        <b-img fluid src="../assets/defaultProfile.PNG.png" class='profilImage border-1 border-primary' rounded="circle" height="40px" width="40px" alt="Circle image"></b-img>
                         <span>userName</span>
                     </b-card-title>
                 </b-col>
@@ -36,13 +36,13 @@
             ></b-embed>
 
             <b-card-img align="center" src="https://placekitten.com/1000/300" img-alt="Card image" img-top />
-            <b-card-text>{{message}}</b-card-text>
+            <b-card-text>message</b-card-text>
         </b-card-body>
 
         <b-card-footer footer-bg-variant="white">
             <b-row cols="2">
                 <b-col>
-                    <b-icon :icon="liked ? 'heart-fill' : 'heart'" variant="primary" font-scale="1.5"></b-icon>
+                    <b-icon :icon="liked ? 'hand-thumbs-up-fill' : 'hand-thumbs-up'" variant="primary" font-scale="1.5"></b-icon>
                 </b-col>
                 <b-col class="text-right">
                     <span>Commentaires </span>
