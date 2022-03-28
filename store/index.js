@@ -21,6 +21,20 @@ export const actions = {
         reject(err)
       });
     })
+  }, 
+
+  //fonction de login
+  login : function ({commit}, userInfos) {
+    return new Promise ((resolve, reject) => {
+    commit;
+    this.$axios.$post('/auth/login', userInfos)
+      .then(function(res) {
+        resolve(res)
+      })
+      .catch(function(err) {
+        reject(err)
+      });
+    })
   }
 
 }

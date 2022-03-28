@@ -152,14 +152,21 @@
             }, 
             login : function() {
                 event.preventDefault()
-                console.log(this.form)
+                this.$store.dispatch('login', {
+                    email: this.form.email,
+                    password : this.form.password
+                }).then(function(res) {
+                    console.log(res)
+                },
+                function(err) {
+                    console.log(err)
+                })
             },
             register : function() {
                 event.preventDefault()
                 this.$store.dispatch('register', {
                     ...this.form
-                    }
-                ).then(function(res) {
+                }).then(function(res) {
                     console.log(res)
                 }, function (err) {
                     console.log(err)
