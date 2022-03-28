@@ -3,6 +3,7 @@
         <b-container fluid id="min-viewport-height" class="m-0 p-0 bg-light">
             <div>  
                 <b-container class="bg-dark" fluid>
+                    <LogModal/>
                     <b-container fluid='lg'>
                         <b-row>
                             <HeaderNav/>
@@ -32,3 +33,4 @@
 }
 
 </style>
+

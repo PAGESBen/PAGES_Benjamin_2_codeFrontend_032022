@@ -1,6 +1,6 @@
 <template>
     <b-row>
-        <b-col  md='6'>
+        <b-col>
             <b-form @submit="onSubmit">
 
                 <b-form-group
