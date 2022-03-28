@@ -1,4 +1,3 @@
-import { reject } from "core-js/fn/promise";
 
 export const state = () => ({
 
