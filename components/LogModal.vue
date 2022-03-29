@@ -97,7 +97,7 @@
                     </b-form-group>
 
                     <small class="text-danger" v-if="mode == 'login' && status == 'login_error'">Adresse mail ou mot de passe invalide</small>
-                    <small class="text-danger" v-if="mode == 'register'&& status == 'create_error'">Une erreur s'est produite</small>
+                    <small class="text-danger" v-if="mode == 'register'&& status == 'create_error'">Il exite déjà un compte utilisant cette adresse mail</small>
 
                 </b-col>
                 
@@ -164,22 +164,26 @@
             }, 
             login : function() {
                 event.preventDefault()
+                const self = this
                 this.$store.dispatch('login', {
                     email: this.form.email,
                     password : this.form.password
                 }).then(function(res) {
-                    console.log('=========connecté==========')
+                    console.log('========= Connecté =========')
+                    self.$bvModal.hide('logModal')
                 },
                 function(err) {
                     console.log(err)
                 })
             },
             register : function() {
+                const self = this
                 event.preventDefault()
                 this.$store.dispatch('register', {
                     ...this.form
                 }).then(function(res) {
-                    // console.log(res)
+                    self.mode = 'login'
+                    console.log('========= Nouvel utilisateur créé =========')
                 }, function (err) {
                     console.log(err)
                 })
