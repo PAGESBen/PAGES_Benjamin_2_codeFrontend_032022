@@ -22,6 +22,7 @@ export const actions = {
 
   //fonction création de compte :
   register : function ({commit}, userInfos) {
+    commit('SET_STATUS', 'loading')
     return new Promise ((resolve, reject) => {
     this.$axios.$post('/auth/signup', userInfos)
       .then(function(res) {

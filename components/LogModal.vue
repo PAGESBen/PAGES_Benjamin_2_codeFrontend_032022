@@ -106,7 +106,11 @@
                         <span v-if="status == 'loading'">Connexion en cours...</span>
                         <span v-else>Connexion</span>
                     </b-button>
-                    <b-button v-if="mode == 'register'" :class="{'disabled' : !validatedFields}" type="submit" variant="primary" @click="register()">S'enregistrer</b-button>
+
+                    <b-button v-if="mode == 'register'" :class="{'disabled' : !validatedFields}" type="submit" variant="primary" @click="register()">
+                        <span>S'enregistrer</span>
+                        <span v-if="status == 'loading'">Inscription en cours...</span>
+                        </b-button>
 
                     <b-link href="#" v-if="mode == 'login'" class="pl-2" @click="switchToRegister()">Je n'ai pas encore de compte</b-link>
                     <b-link href="#" v-if="mode == 'register'" class="pl-2" @click="switchToLogin()">J'ai déjà un compte</b-link>
@@ -132,6 +136,12 @@
                     password:'',
                     position: '',
                 },
+            }
+        },
+        mounted : function () {
+            console.log(this.$store.state.user.userId)
+            if(this.$store.state.user.userId == -1) {
+                this.$bvModal.show('logModal')
             }
         },
         computed : {
