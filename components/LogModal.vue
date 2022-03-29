@@ -96,6 +96,9 @@
                         ></b-form-input>
                     </b-form-group>
 
+                    <small class="text-danger" v-if="mode == 'login' && status == 'login_error'">Adresse mail ou mot de passe invalide</small>
+                    <small class="text-danger" v-if="mode == 'register'&& status == 'create_error'">Une erreur s'est produite</small>
+
                 </b-col>
                 
                 <b-col cols="12" class="text-right border-top pt-3">
@@ -165,7 +168,7 @@
                     email: this.form.email,
                     password : this.form.password
                 }).then(function(res) {
-                    console.log(res)
+                    console.log('=========connecté==========')
                 },
                 function(err) {
                     console.log(err)
@@ -176,7 +179,7 @@
                 this.$store.dispatch('register', {
                     ...this.form
                 }).then(function(res) {
-                    console.log(res)
+                    // console.log(res)
                 }, function (err) {
                     console.log(err)
                 })

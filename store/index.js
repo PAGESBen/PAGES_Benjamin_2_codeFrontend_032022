@@ -43,11 +43,10 @@ export const actions = {
       .then(function(res) {
         commit('SET_STATUS', '')
         commit('LOG_USER', res.data)
-
         resolve(res)
       })
       .catch(function(err) {
-        commit('setStatus', 'login_error')
+        commit('SET_STATUS', 'login_error')
         reject(err)
       });
     })
