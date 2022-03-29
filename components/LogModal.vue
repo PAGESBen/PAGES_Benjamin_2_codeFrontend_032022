@@ -99,7 +99,10 @@
                 </b-col>
                 
                 <b-col cols="12" class="text-right border-top pt-3">
-                    <b-button v-if="mode == 'login'" :class="{'disabled' : !validatedFields}"  type="submit" variant="primary" @click="login()">Connexion</b-button>
+                    <b-button v-if="mode == 'login'" :class="{'disabled' : !validatedFields}"  type="submit" variant="primary" @click="login()">
+                        <span v-if="status == 'loading'">Connexion en cours...</span>
+                        <span v-else>Connexion</span>
+                    </b-button>
                     <b-button v-if="mode == 'register'" :class="{'disabled' : !validatedFields}" type="submit" variant="primary" @click="register()">S'enregistrer</b-button>
 
                     <b-link href="#" v-if="mode == 'login'" class="pl-2" @click="switchToRegister()">Je n'ai pas encore de compte</b-link>
@@ -112,6 +115,8 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+
     export default {
         name : 'LoginForm',
         data() {
@@ -127,6 +132,7 @@
             }
         },
         computed : {
+            
             validatedFields : function() { //Ici on conditionne la class desable sur le bouton de l'envoi du formulaire par une fonction de validation
                 if(this.mode === 'register') {
                     if (this.form.firstname !== '' && this.form.lastname !== '' && this.form.email !== '' && this.form.password !== '' && this.form.position !== '') {
@@ -141,7 +147,10 @@
                         return false
                     }
                 }
-            }
+            }, 
+            
+            ...mapState(['status', 'user'])
+
         },
         methods: {
             switchToLogin : function () { // changement de formulaire pour le formulaire 'login' 
