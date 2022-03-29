@@ -102,12 +102,12 @@
                 </b-col>
                 
                 <b-col cols="12" class="text-right border-top pt-3">
-                    <b-button v-if="mode == 'login'" :class="{'disabled' : !validatedFields}"  type="submit" variant="primary" @click="login()">
+                    <b-button v-if="mode == 'login'" :disabled="validatedFields ? false : true"  type="submit" variant="primary" @click="login()">
                         <span v-if="status == 'loading'">Connexion en cours...</span>
                         <span v-else>Connexion</span>
                     </b-button>
 
-                    <b-button v-if="mode == 'register'" :class="{'disabled' : !validatedFields}" type="submit" variant="primary" @click="register()">
+                    <b-button v-if="mode == 'register'" :disabled="validatedFields ? false : true" type="submit" variant="primary" @click="register()">
                         <span>S'enregistrer</span>
                         <span v-if="status == 'loading'">Inscription en cours...</span>
                         </b-button>
