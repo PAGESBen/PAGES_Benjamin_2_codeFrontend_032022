@@ -43,7 +43,7 @@ export const actions = {
     this.$axios.$post('/auth/login', userInfos)
       .then(function(res) {
         commit('SET_STATUS', '')
-        commit('LOG_USER', res.data)
+        commit('LOG_USER', res)
         resolve(res)
       })
       .catch(function(err) {

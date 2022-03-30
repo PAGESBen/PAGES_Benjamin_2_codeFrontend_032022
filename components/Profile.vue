@@ -7,14 +7,15 @@
                 </div>
             </b-col>
         </b-row>
-        <b-rows>
+        <b-row>
             <b-col class="mx-3s">
                 <b-badge v-if="admin" variant="danger">Admin</b-badge>
                 <h1 class="w-100">UserName</h1>
                 <p>email</p>
                 <p>Position</p>
             </b-col>
-        </b-rows>
+        </b-row>
+
         <b-rows>
             Posts
         </b-rows>
@@ -25,6 +26,7 @@
 <script>
     export default {
     name: 'postCard',
+
     data: function () {
         return {
             admin : true

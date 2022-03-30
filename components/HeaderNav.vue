@@ -6,7 +6,7 @@
         </b-navbar-brand>
 
         <b-navbar-nav>
-            <b-button @click="$bvModal.show('logModal')" >Se connecter</b-button>
+            <!-- <b-button @click="$bvModal.show('logModal')" >Se connecter</b-button> -->
             <b-nav-item href="#">Logout</b-nav-item>
         </b-navbar-nav>
 

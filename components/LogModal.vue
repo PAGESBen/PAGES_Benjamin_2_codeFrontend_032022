@@ -101,19 +101,26 @@
 
                 </b-col>
                 
-                <b-col cols="12" class="text-right border-top pt-3">
-                    <b-button v-if="mode == 'login'" :disabled="validatedFields ? false : true"  type="submit" variant="primary" @click="login()">
-                        <span v-if="status == 'loading'">Connexion en cours...</span>
+                <b-col cols="12" class="border-top pt-3">
+                    <b-button block v-if="mode == 'login'" :disabled="validatedFields ? false : true"  type="submit" variant="primary" @click="login()">
+                        <span v-if="status == 'loading'">
+                            <b-spinner small></b-spinner>
+                            Connexion en cours...
+                        </span>
                         <span v-else>Connexion</span>
                     </b-button>
 
-                    <b-button v-if="mode == 'register'" :disabled="validatedFields ? false : true" type="submit" variant="primary" @click="register()">
+                    <b-button block v-if="mode == 'register'" :disabled="validatedFields ? false : true" type="submit" variant="primary" @click="register()">
                         <span>S'enregistrer</span>
-                        <span v-if="status == 'loading'">Inscription en cours...</span>
+                        <span v-if="status == 'loading'">
+                            <b-spinner small></b-spinner>
+                            Inscription en cours...
+                            </span>
                         </b-button>
-
-                    <b-link href="#" v-if="mode == 'login'" class="pl-2" @click="switchToRegister()">Je n'ai pas encore de compte</b-link>
-                    <b-link href="#" v-if="mode == 'register'" class="pl-2" @click="switchToLogin()">J'ai déjà un compte</b-link>
+                </b-col>
+                <b-col class="text-right pt-2" >
+                    <b-link href="#" v-if="mode == 'login'" @click="switchToRegister()">Je n'ai pas encore de compte</b-link>
+                    <b-link href="#" v-if="mode == 'register'" @click="switchToLogin()">J'ai déjà un compte</b-link>
                 </b-col>
                 
             </b-row>
@@ -138,12 +145,7 @@
                 },
             }
         },
-        mounted : function () {
-            console.log(this.$store.state.user.userId)
-            if(this.$store.state.user.userId == -1) {
-                this.$bvModal.show('logModal')
-            }
-        },
+
         computed : {
             
             validatedFields : function() { //Ici on conditionne la class desable sur le bouton de l'envoi du formulaire par une fonction de validation
