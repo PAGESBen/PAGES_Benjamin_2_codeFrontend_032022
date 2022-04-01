@@ -102,7 +102,7 @@
                 </b-col>
                 
                 <b-col cols="12" class="border-top pt-3">
-                    <b-button block v-if="mode == 'login'" :disabled="validatedFields ? false : true"  type="submit" variant="primary" @click="login()">
+                    <b-button block v-if="mode == 'login'" :disabled="validatedFields ? false : true"  type="submit" variant="primary" @click.prevent="login()">
                         <span v-if="status == 'loading'">
                             <b-spinner small></b-spinner>
                             Connexion en cours...
@@ -110,7 +110,7 @@
                         <span v-else>Connexion</span>
                     </b-button>
 
-                    <b-button block v-if="mode == 'register'" :disabled="validatedFields ? false : true" type="submit" variant="primary" @click="register()">
+                    <b-button block v-if="mode == 'register'" :disabled="validatedFields ? false : true" type="submit" variant="primary" @click.prevent="register()">
                         <span>S'enregistrer</span>
                         <span v-if="status == 'loading'">
                             <b-spinner small></b-spinner>
@@ -150,17 +150,14 @@
             
             validatedFields : function() { //Ici on conditionne la class desable sur le bouton de l'envoi du formulaire par une fonction de validation
                 if(this.mode === 'register') {
-                    if (this.form.firstname !== '' && this.form.lastname !== '' && this.form.email !== '' && this.form.password !== '' && this.form.position !== '') {
-                        return true
-                    } else {
-                        return false
-                    }
+                    return this.form.firstname !== '' 
+                        && this.form.lastname !== '' 
+                        && this.form.email !== '' 
+                        && this.form.password !== '' 
+                        && this.form.position !== ''
                 } else {
-                      if (this.form.email !== '' && this.form.password !== '') {
-                        return true
-                    } else {
-                        return false
-                    }
+                    return this.form.email !== '' 
+                        && this.form.password !== ''
                 }
             }, 
             
@@ -175,26 +172,22 @@
                 this.mode = 'register';
             }, 
             login : function() {
-                event.preventDefault()
-                const self = this
                 this.$store.dispatch('login', {
                     email: this.form.email,
                     password : this.form.password
-                }).then(function(res) {
+                }).then((res) => {
                     console.log('========= Connecté =========')
-                    self.$bvModal.hide('logModal')
+                    this.$bvModal.hide('logModal')
                 },
                 function(err) {
                     console.log(err)
                 })
             },
             register : function() {
-                const self = this
-                event.preventDefault()
                 this.$store.dispatch('register', {
                     ...this.form
-                }).then(function(res) {
-                    self.mode = 'login'
+                }).then((res) => {
+                    this.mode = 'login'
                     console.log('========= Nouvel utilisateur créé =========')
                 }, function (err) {
                     console.log(err)

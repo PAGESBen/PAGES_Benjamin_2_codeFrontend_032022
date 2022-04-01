@@ -1,6 +1,6 @@
 <template>
 
-    <b-card class="border-1 p-0 my-2">
+    <b-card class="p-0 my-2">
         <b-card-header header-bg-variant="white" class="p-1" align-v="center">
             <b-row cols="2">
                 <b-col>
