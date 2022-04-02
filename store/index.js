@@ -30,7 +30,16 @@ export const mutations = {
 
   GET_USER_PROFILE: function(state, profile) {
     state.profileLogged = profile
-  } 
+  }, 
+
+  LOGOUT_USER : function (state) {
+    state.user = {
+      userId : -1, 
+      token : ''
+    }
+    state.profileLogged = {}
+    this.$router.push('/')
+  }
 }
 
 export const actions = {
