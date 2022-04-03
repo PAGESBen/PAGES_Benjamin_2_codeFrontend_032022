@@ -13,7 +13,12 @@ export const state = () => ({
       userId : -1,
       token : ''
     },
-    profileLogged : {}
+    profileLogged : {}, 
+    regex : {
+      mail : /^[a-z0-9.\-_]+[@]{1}[a-z0-9.\-_]+[.]{1}[a-z]{2,}$/i,
+      name : /^[a-zéèêïëà -]{2,}$/i,
+      password : /^[a-zéèêïëà -]{2,}$/i
+    }
   })
   
 export const mutations = {
