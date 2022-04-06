@@ -7,7 +7,7 @@
                 </div>
                 
                 <!-- Bouton supprimer réservé aux administrateurs -->
-                <b-button v-if="!owner && this.$store.state.user.admin" variant="danger" class="m-2" @click="modifyForm()">Supprimer l'utilisateur</b-button>
+                <b-button v-if="!owner && this.$store.state.user.admin" variant="danger" class="m-2" @click="deleteUserProfile()">Supprimer l'utilisateur</b-button>
                 
                 <!-- bouton modifier réservé au propriétaire de la fiche -->
                 <b-button v-if="owner && !modify" variant="outline-primary" class="m-2" @click="modifyForm()">Modifier le profil</b-button>
@@ -28,7 +28,6 @@
         </b-row>
 
         <b-row v-if="!modify" class="py-3 border-bottom">
-            <b-badge v-if="profile.admin" variant="danger">Admin</b-badge>
 
             <b-alert :show="alert.show" dismissible :variant="alert.variant" class="w-100">
                 {{alert.message}}
@@ -133,19 +132,29 @@
 
 <script>
 
+
 export default {
     name: 'profile',
     data : function () {
         return {
+            profile : {
+                id : '',
+                firstname: '',
+                lastname: '', 
+                email : '',
+                imageURL : '',
+                position : ''
+            },
+            owner : false, 
             modify : false,
             loading : false, //sert pour le spiner lors de l'execution de modifyUserProfile
             form : {
                 file : null,
                 user : {
-                    firstname : this.profile.firstname,
-                    lastname : this.profile.lastname,
-                    position : this.profile.position,
-                    email : this.profile.email
+                    firstname : '',
+                    lastname : '',
+                    position : '',
+                    email : ''
                 },
             },
             alert : {
@@ -156,11 +165,26 @@ export default {
         }
     },
 
-    props : {
-        profile : Object,
-        owner : Boolean, 
-        admin : Boolean
-    }, 
+    async mounted() {
+        
+        try{
+            
+            console.log(this.profile)
+            const userId = this.$route.params.userId == undefined ? this.$store.state.user.userId : this.$route.params.userId
+
+            this.profile = await this.$axios.$get('/user/' + userId)
+
+            if(this.profile.id === this.$store.state.user.userId) {
+                this.owner = true
+            }
+
+        } catch (err) {
+
+            console.log(err)
+
+        }
+
+    },
 
     methods : {
         modifyForm : function () {
@@ -182,11 +206,12 @@ export default {
                     data.append('user', JSON.stringify(this.form.user))
                     
                     const user = !this.form.file ? this.form.user : data
-                    console.log(user)
-                    console.log(this.profile.id)
+                    // console.log(user)
+                    // console.log(this.profile.id)
 
-                    await this.$axios.put('/user/' + this.profile.id, user)
+                    const res = await this.$axios.put('/user/' + this.profile.id, user)
                     
+                    this.profile = res.data
                     this.loading = false
                     this.modify = false
                     this.alert.show = true
@@ -201,6 +226,30 @@ export default {
                     this.alert.message = "Une erreur s'est produite veillez rééssayer ulterieurement"
                     this.alert.variant = 'danger'
                 }
+        }, 
+
+        deleteUserProfile : async function() {
+            try{
+                this.loading = true
+                if(this.$route.params.userId === this.$store.state.user.userId) {
+                    this.loading = false
+                    this.alert.show = true
+                    this.alert.message = "Vous ne pouvez pas effacer votre propre profil"
+                    this.alert.variant = 'danger'
+                } else {
+                    await this.$axios.delete('/user/' + this.$route.params.userId)
+                    this.loading = false
+                    this.alert.show = true
+                    this.alert.message = "Ce profil a été supprimé"
+                    this.alert.variant = 'warning'
+                }
+            } catch (e) {
+                this.loading = false
+                this.modify = false
+                this.alert.show = true
+                this.alert.message = "Une erreur s'est produite veillez rééssayer ulterieurement"
+                this.alert.variant = 'danger' 
+            }
         }
     }
 }

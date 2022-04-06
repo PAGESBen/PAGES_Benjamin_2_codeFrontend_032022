@@ -6,7 +6,7 @@
         <b-nav-item to='/addPost' @click="activeNavLink('Poster')" :active="activeNav === 'Poster'" >
             Poster
         </b-nav-item>
-        <b-nav-item to='/Profile' @click="activeNavLink('Profile')" :active="activeNav === 'Profile'" >
+        <b-nav-item to="/profile" @click="activeNavLink('Profile')" :active="activeNav === 'Profile'" >
             Mon profil
         </b-nav-item>
     </b-nav>
