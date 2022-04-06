@@ -6,16 +6,20 @@
                     <b-img :src="profile.imageURL" thumbnail class="profile-img" alt="Profile Image"></b-img>        
                 </div>
                 
+                <!-- Bouton supprimer réservé aux administrateurs -->
+                <b-button v-if="!owner && this.$store.state.user.admin" variant="danger" class="m-2" @click="modifyForm()">Supprimer l'utilisateur</b-button>
+                
+                <!-- bouton modifier réservé au propriétaire de la fiche -->
                 <b-button v-if="owner && !modify" variant="outline-primary" class="m-2" @click="modifyForm()">Modifier le profil</b-button>
                 
                 <div v-if="modify && form.file == null" class="change-profile-img">
                     <label for="change-profile-img-input">
                         <b-icon icon="upload" variant="dark" font-scale="1"></b-icon>
-                        <span class="dark small">Changer d'image</span>
+                        <span class="dark small hover-underline">Changer d'image</span>
                     </label>
                     <b-form-file plain accept=".jpg, .jpeg, .png" id="change-profile-img-input" v-model="form.file"></b-form-file>
                 </div>
-                <span class="small text-danger" v-if="modify && form.file != null" @click="form.file = null">
+                <span class="small text-danger hover-underline" v-if="modify && form.file != null" @click="form.file = null">
                     <b-icon icon="x-circle" variant="danger" font-scale="1"></b-icon>
                     Annuler changement
                 </span>
@@ -25,6 +29,10 @@
 
         <b-row v-if="!modify" class="py-3 border-bottom">
             <b-badge v-if="profile.admin" variant="danger">Admin</b-badge>
+
+            <b-alert :show="alert.show" dismissible :variant="alert.variant" class="w-100">
+                {{alert.message}}
+            </b-alert>
 
             <b-list-group class="w-100">
 
@@ -130,28 +138,40 @@ export default {
     data : function () {
         return {
             modify : false,
-            loading : false,
+            loading : false, //sert pour le spiner lors de l'execution de modifyUserProfile
             form : {
                 file : null,
                 user : {
                     firstname : this.profile.firstname,
                     lastname : this.profile.lastname,
                     position : this.profile.position,
-                    email : this.profile.email, 
-                }
+                    email : this.profile.email
+                },
+            },
+            alert : {
+                show : false, 
+                message : "", 
+                variant : "success"
             }
         }
     },
 
     props : {
         profile : Object,
-        owner : Boolean
+        owner : Boolean, 
+        admin : Boolean
     }, 
 
     methods : {
         modifyForm : function () {
+            this.form.user = {
+                firstname : this.profile.firstname,
+                lastname : this.profile.lastname,
+                position : this.profile.position,
+                email : this.profile.email
+            }
             this.modify = true
-        }, 
+        },
         
         modifyUserProfile : async function() {
              try {
@@ -169,17 +189,22 @@ export default {
                     
                     this.loading = false
                     this.modify = false
-
+                    this.alert.show = true
+                    this.alert.message = "Profil mis à jour avec succès"
                     console.log('==========Profil mis à jour==========')
 
                 } catch (e) {
                     console.log(e)
+                    this.loading = false
+                    this.modify = false
+                    this.alert.show = true
+                    this.alert.message = "Une erreur s'est produite veillez rééssayer ulterieurement"
+                    this.alert.variant = 'danger'
                 }
         }
     }
 }
 </script>
-
 
 <style scoped>
     .icon-background {
@@ -209,6 +234,11 @@ export default {
 
     .change-profile-img>#change-profile-img-input {
     cursor: pointer;
+    }
+
+    .hover-underline:hover {
+        text-decoration-line: underline;
+        cursor: pointer
     }
 
 </style>

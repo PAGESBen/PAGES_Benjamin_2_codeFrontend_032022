@@ -5,8 +5,10 @@
             <b-row cols="2">
                 <b-col>
                     <b-card-title>
-                        <b-img fluid src="../assets/defaultProfile.PNG.png" class='profilImage border-1 border-primary' rounded="circle" height="40px" width="40px" alt="Circle image"></b-img>
-                        <span>userName</span>
+                        <nuxt-link to="/profile/42">
+                            <b-img fluid src="../assets/defaultProfile.PNG.png" class='profilImage border-1 border-primary' rounded="circle" height="40px" width="40px" alt="Circle image"></b-img>
+                            <span>userName</span>
+                        </nuxt-link>
                     </b-card-title>
                 </b-col>
 

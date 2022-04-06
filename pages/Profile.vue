@@ -15,9 +15,10 @@ export default {
         ...mapState(['profileLogged'])
     },
 
-    mounted() {
+    async mounted() { //!jeremy : Faut il un try catch ou une promesse pour gerer les erreurs
+        console.log(this.$route.params.userId)
         const userId = this.$store.state.user.userId
-        this.$store.dispatch('getUserProfile', userId)
+        await this.$store.dispatch('getUserProfile', userId)
     }
 }
 </script>

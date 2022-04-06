@@ -3,7 +3,8 @@
 // if (!user) {
 //   user = {
 //     userId : -1,
-//     token : ''
+//     token : '', 
+//     admin : false
 //   }
 // }
 
@@ -11,7 +12,8 @@ export const state = () => ({
     status : '',
     user :{ // remplacer par le user du local storage
       userId : -1,
-      token : ''
+      token : '', 
+      admin : false
     },
     profileLogged : {}, 
     regex : {
@@ -40,7 +42,8 @@ export const mutations = {
   LOGOUT_USER : function (state) {
     state.user = {
       userId : -1, 
-      token : ''
+      token : '', 
+      admin : false
     }
     state.profileLogged = {}
     this.$router.push('/')
@@ -83,14 +86,13 @@ export const actions = {
   },
 
   //fonction de récuperation du profil utilisateur
-  getUserProfile : function ({commit}, userId) {
-    this.$axios.$get('/user/' + userId)
-      .then(function(res) {
-        commit('GET_USER_PROFILE', res)
-        console.log(res)
-      })
-      .catch(err => console.log(err))
-
+  getUserProfile : async function ({commit}, userId) {
+    try{
+      const res = await this.$axios.$get('/user/' + userId)
+      commit('GET_USER_PROFILE', res)
+      // console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
   }
-
 }
