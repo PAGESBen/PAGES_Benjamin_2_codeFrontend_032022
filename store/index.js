@@ -14,12 +14,11 @@ export const state = () => ({
       userId : -1,
       token : '', 
       admin : false
-    },
-    profileLogged : {}, 
+    }, 
     regex : {
       mail : /^[a-z0-9.\-_]+[@]{1}[a-z0-9.\-_]+[.]{1}[a-z]{2,}$/i,
       name : /^[a-zéèêïëà -]{2,}$/i,
-      password : /^[a-zéèêïëà -]{2,}$/i
+      password : /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/i
     }
   })
   
@@ -35,17 +34,12 @@ export const mutations = {
     state.user = user
   }, 
 
-  GET_USER_PROFILE: function(state, profile) {
-    state.profileLogged = profile
-  }, 
-
   LOGOUT_USER : function (state) {
     state.user = {
       userId : -1, 
       token : '', 
       admin : false
     }
-    state.profileLogged = {}
     this.$router.push('/')
   }
 }
@@ -83,16 +77,5 @@ export const actions = {
           reject(err)
         });
       })
-  },
-
-  //fonction de récuperation du profil utilisateur
-  getUserProfile : async function ({commit}, userId) {
-    try{
-      const res = await this.$axios.$get('/user/' + userId)
-      commit('GET_USER_PROFILE', res)
-      // console.log(res)
-    } catch (err) {
-      console.log(err)
-    }
   }
 }

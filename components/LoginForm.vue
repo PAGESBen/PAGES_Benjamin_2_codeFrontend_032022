@@ -91,7 +91,7 @@
                             placeholder="Entrez votre mot de passe"
                             required
                             ></b-form-input>
-                            <small class="text-danger pb-2" v-if="!validateFields.password && fieldAlert">Mot de passe non valide ! </small>
+                            <small class="text-danger pb-2" v-if="!validateFields.password && fieldAlert">Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.  </small>
                         </b-form-group>
 
                         <small class="text-danger" v-if="mode == 'login' && status == 'login_error'">Adresse mail ou mot de passe invalide</small>
@@ -170,7 +170,7 @@
                 return {
                     firstname : this.regex.name.test(this.form.firstname),
                     lastname : this.regex.name.test(this.form.lastname),
-                    password : this.regex.name.test(this.form.password), // a changer par la regex password
+                    password : this.regex.password.test(this.form.password), // a changer par la regex password
                     mail : this.regex.mail.test(this.form.email)
                 }
             }
