@@ -68,6 +68,10 @@ export default {
         return {
             liked : false
         }
+    }, 
+
+    props :{
+        post : Object
     }
 }
 </script>

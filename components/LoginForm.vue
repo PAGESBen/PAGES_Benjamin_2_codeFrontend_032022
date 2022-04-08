@@ -181,9 +181,11 @@
         methods: {
             switchToLogin : function () { // changement de formulaire pour le formulaire 'login' 
                 this.mode = 'login';
+                this.fieldAlert = false
             },
             switchToRegister : function () { // changement de formulaire pour le formulaire 'register'
                 this.mode = 'register';
+                this.fieldAlert = false
             }, 
             login : function () {
                 if(!this.validateFields.mail){
