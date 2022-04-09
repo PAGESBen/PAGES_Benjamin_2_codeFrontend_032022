@@ -1,8 +1,8 @@
 <template>
     <div>
-        <!-- <PostCard v-for="post in posts" :key="post.id"
+        <PostCard v-for="post in posts.posts" :key="post.id"
             :post="post" />
-     -->
+    
 
         <!--pagination -->
         <b-row class="my-5">
@@ -34,7 +34,7 @@ export default {
     async mounted() {
         try {
             this.posts = await this.$axios.$get('/post/' + this.page + '/' + this.limit)
-            console.log(this.posts)
+            // console.log(this.posts)
         } catch (e) {
             console.log(e)
         }
@@ -47,7 +47,7 @@ export default {
                 console.log(this.posts)
             } catch (e) {
                 console.log(e)
-            }    
+            } 
         }
     }
 }

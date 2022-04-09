@@ -5,19 +5,19 @@
             <b-row cols="2">
                 <b-col>
                     <b-card-title>
-                        <nuxt-link to="/profile/41">
-                            <b-img fluid src="../assets/defaultProfile.PNG.png" class='profilImage border-1 border-primary' rounded="circle" height="40px" width="40px" alt="Circle image"></b-img>
-                            <span>userName</span>
+                        <nuxt-link :to="'/profile/' + post.userId">
+                            <b-img fluid :src="post.userImg" class='profilImage border-1 border-primary' thumbnail :alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
+                            <span>{{post.firstname}} {{post.lastname}}</span>
                         </nuxt-link>
                     </b-card-title>
                 </b-col>
 
-                <b-col align-self="end" class="d-flex justify-content-end">
-                    <b-button variant="secondary" size='sm' class="m-1">
+                <b-col v-if="post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
+                    <b-button v-if="post.userId == user.userId" variant="secondary" size='sm' class="m-1">
                         <b-icon icon="pencil-square" variant="light" font-scale="1"></b-icon>
                     </b-button>
                     
-                    <b-button variant="danger"  size='sm' class="m-1">
+                    <b-button v-if="post.userId == user.userId || user.admin" variant="danger"  size='sm' class="m-1">
                         <b-icon icon="trash-fill" variant="light" font-scale="1"></b-icon>
                     </b-button>
                 </b-col>
@@ -25,30 +25,46 @@
 
 
             <b-row class="m-0 p-1">
-                <b-card-sub-title sub-title-text-variant='muted small'>Created 3min ago</b-card-sub-title>
+                <b-card-sub-title sub-title-text-variant='muted small'>Posté le {{postDate}}</b-card-sub-title>
             </b-row>
         </b-card-header>
 
         <b-card-body class="p-2">
-            <b-embed
+
+            <b-card-text>{{post.messageText}}</b-card-text>
+            
+            <b-embed v-if="post.mediaType == 'video'"
                 type="iframe"
                 aspect="16by9"
-                src="https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4"
+                :src="post.mediaURL"
                 allowfullscreen
             ></b-embed>
 
-            <b-card-img align="center" src="https://placekitten.com/1000/300" img-alt="Card image" img-top />
-            <b-card-text>message</b-card-text>
+            <!-- Comment gerer la partie alt -->
+            <b-card-img
+                v-if="post.mediaType == 'image'"
+                align="center"
+                :src="post.mediaURL" 
+                img-alt="post illustration"
+                img-top 
+            />
+
         </b-card-body>
 
         <b-card-footer footer-bg-variant="white">
             <b-row cols="2">
                 <b-col>
-                    <b-icon :icon="liked ? 'hand-thumbs-up-fill' : 'hand-thumbs-up'" variant="primary" font-scale="1.5"></b-icon>
+                    <b-icon class="hover-animation" :icon="post.mylikes ? 'hand-thumbs-up-fill' : 'hand-thumbs-up'" variant="primary" font-scale="1.5"></b-icon>
                 </b-col>
                 <b-col class="text-right">
-                    <span>Commentaires </span>
-                    <b-badge href="#" variant="secondary">15</b-badge>
+                    <nuxt-link v-if="post.comments != 0" :to="'/post/' + post.id">
+                        <span>Commentaires </span>
+                        <b-badge href="#" variant="secondary">{{post.comments}}</b-badge>
+                    </nuxt-link>
+
+                     <nuxt-link v-else :to="'/post/' + post.id">
+                        <span>Commenter</span>
+                    </nuxt-link>                   
                 </b-col>
 
             </b-row>
@@ -62,23 +78,43 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
     name: 'postCard',
     data: function () {
         return {
-            liked : false
+            liked : false, 
         }
     }, 
 
     props :{
         post : Object
-    }
+    }, 
+
+    computed : {
+        ...mapState(['user']),
+        
+        postDate () { 
+            return (new Date(this.post.date).toLocaleDateString() + ' à ' + new Date(this.post.date).toLocaleTimeString())
+        }
+    },
+
 }
 </script>
 
-<style>
+<style scoped>
     .profilImage{
-        height: 50px;
-        width: 50px
+        height: 30px;
+        width: 30px
+    }
+
+    .hover-animation:hover {
+        -webkit-transform: scale(1.2);
+        -moz-transform: scale(1.2);
+        -o-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        transform: scale(1.2);
+        cursor: pointer
     }
 </style>

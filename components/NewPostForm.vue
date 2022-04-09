@@ -1,5 +1,13 @@
 <template>
     <b-row>
+
+        <!--En cas de message vide ou d'erreur-->
+        <b-col cols="12">
+            <b-alert :show="alert.show" dismissible :variant="alert.variant" class="w-100">
+                {{alert.message}}
+            </b-alert>
+        </b-col>
+
         <b-col>
             <b-form id="postForm" @submit.prevent="onSubmit">
                 <b-form-group
@@ -41,12 +49,18 @@
                         messageText: ''
                     }
                 },
-                validatedForm : false
+                validatedForm : false, 
+                alert : {
+                    show : false, 
+                    message : "", 
+                    variant : "success"
+                }
             }
         },
         methods: {
             async onSubmit() {
-                try {                    
+                try {
+                    this.alert.show = false             
                     // Sécurité pour empecher l'envoi de messages vides : 
                     if(!this.form.file && this.form.post.textMessage == "") {
                         return this.validatedForm = false
@@ -65,10 +79,13 @@
 
                     await this.$axios.post('/post', post)
                     
-                    console.log('==========message posté==========')
-
+                    this.$router.push('/')
+                
                 } catch (e) {
-                    console.log(e)
+                    console.log('test')
+                    this.alert.show = true
+                    this.alert.message = "Une erreur s'est produite ou le post est vide"
+                    this.alert.variant = 'danger'
                 }
             },
         }
