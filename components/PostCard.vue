@@ -57,14 +57,10 @@
                     <b-icon class="hover-animation" :icon="post.mylikes ? 'hand-thumbs-up-fill' : 'hand-thumbs-up'" variant="primary" font-scale="1.5"></b-icon>
                 </b-col>
                 <b-col class="text-right">
-                    <nuxt-link v-if="post.comments != 0" :to="'/post/' + post.id">
+                    <nuxt-link :to="'/post/' + post.id">
                         <span>Commentaires </span>
-                        <b-badge href="#" variant="secondary">{{post.comments}}</b-badge>
-                    </nuxt-link>
-
-                     <nuxt-link v-else :to="'/post/' + post.id">
-                        <span>Commenter</span>
-                    </nuxt-link>                   
+                        <b-badge v-if="post.comments != 0" href="#" variant="secondary">{{post.comments}}</b-badge>
+                    </nuxt-link>             
                 </b-col>
 
             </b-row>
