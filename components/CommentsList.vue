@@ -7,9 +7,9 @@
                         <b-img fluid :src="comment.userImg" class='profilImage border-1 border-primary' thumbnail alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
                         <span>{{comment.firstname}} + {{comment.lastname}}</span>
                     </nuxt-link>
-                    <small class="m-1">Posté le ...</small>
+                    <small class="m-1">Posté le {{commentDate(comment)}}</small>
                 </div>
-                <div>
+                <div class="mb-3">
                     <p>{{comment.messageText}}</p>
 
                     <b-embed v-if="comment.mediaType == 'video'"
@@ -21,7 +21,7 @@
 
                     <!-- Comment gerer la partie alt -->
                     <b-card-img
-                        v-if="comment.mediaType == 'image'"
+                        v-if="comment.mediaType == 'image' || comment.mediaType == 'gif' "
                         align="center"
                         :src="comment.mediaURL" 
                         img-alt="comment illustration"
@@ -71,6 +71,9 @@ export default {
     }, 
 
     methods : {
+        commentDate : function (comment) { 
+            return (new Date(comment.date).toLocaleDateString() + ' à ' + new Date(comment.date).toLocaleTimeString())
+        },
         nextPage : async function () {
             try {
                 this.page += 1

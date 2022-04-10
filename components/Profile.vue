@@ -210,6 +210,8 @@ export default {
                     // console.log(this.profile.id)
 
                     const res = await this.$axios.put('/user/' + this.profile.id, user)
+
+                    this.form.file = null
                     
                     this.profile = res.data
                     this.loading = false

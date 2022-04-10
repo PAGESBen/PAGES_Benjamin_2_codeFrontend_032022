@@ -12,12 +12,12 @@
                     </b-card-title>
                 </b-col>
 
-                <b-col v-if="post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
+                <b-col v-if="!feed && post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
                     <b-button v-if="post.userId == user.userId" variant="secondary" size='sm' class="m-1">
                         <b-icon icon="pencil-square" variant="light" font-scale="1"></b-icon>
                     </b-button>
                     
-                    <b-button v-if="post.userId == user.userId || user.admin" variant="danger"  size='sm' class="m-1">
+                    <b-button v-if="post.userId == user.userId || user.admin" variant="danger" size='sm' class="m-1" @click="deletePost()">
                         <b-icon icon="trash-fill" variant="light" font-scale="1"></b-icon>
                     </b-button>
                 </b-col>
@@ -59,7 +59,7 @@
                 <b-col class="text-right">
                     <nuxt-link :to="'/post/' + post.id">
                         <span>Commentaires </span>
-                        <b-badge v-if="post.comments != 0" href="#" variant="secondary">{{post.comments}}</b-badge>
+                        <b-badge v-if="post.comments != 0" variant="secondary">{{post.comments}}</b-badge>
                     </nuxt-link>             
                 </b-col>
 
@@ -85,7 +85,8 @@ export default {
     }, 
 
     props :{
-        post : Object
+        post : Object,
+        feed : Boolean
     }, 
 
     computed : {
@@ -94,7 +95,13 @@ export default {
         postDate () { 
             return (new Date(this.post.date).toLocaleDateString() + ' à ' + new Date(this.post.date).toLocaleTimeString())
         }
-    },
+    }, 
+
+    methods : {
+        deletePost () {
+            this.$emit('delete-post', {id : this.post.id})
+        }
+    }
 
 }
 </script>

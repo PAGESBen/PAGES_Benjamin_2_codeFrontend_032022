@@ -3,7 +3,8 @@
         <b-row class="my-3">
             <b-col>
                 <PostCard
-                    :post="post" 
+                    :post="post"
+                    @delete-post="deletePost"
                 />
             </b-col>
         </b-row>
@@ -17,7 +18,6 @@
                 <b-collapse id="addComment" class="mt-2">
                     <b-row class="bg-light p-2">
                         <b-col>
-                            <!-- <h2 class="h6">Poster un commentaire</h2> -->
                             <CommentForm />
                         </b-col>
                     </b-row>
@@ -44,7 +44,7 @@ export default {
 
     data : function () {
         return {
-            post : []
+            post : {}
         }
     },
 
@@ -54,7 +54,20 @@ export default {
         } catch (e) {
             console.log(e)
         } 
+    },
+    
+    methods : {
+        async deletePost(payload) {
+            try {
+                await this.$axios.delete('/post/' + payload.id)
+                console.log('======Post supprimé=======')
+                this.$router.push('/')
+            } catch(e) {
+                console.log(e)
+            }
+        }    
     }
+
 }
 
 </script>

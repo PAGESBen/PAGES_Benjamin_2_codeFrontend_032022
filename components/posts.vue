@@ -1,7 +1,7 @@
 <template>
     <div>
         <PostCard v-for="post in posts.posts" :key="post.id"
-            :post="post" />
+            :post="post" feed />
     
 
         <!--pagination -->
