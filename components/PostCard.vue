@@ -13,7 +13,7 @@
                 </b-col>
 
                 <b-col cols="4" v-if="!feed && post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
-                    <b-button v-if="post.userId == user.userId" variant="secondary" size='sm' class="m-1">
+                    <b-button v-if="post.userId == user.userId" variant="secondary" size='sm' class="m-1" @click="updatePost">
                         <b-icon icon="pencil-square" variant="light" font-scale="1"></b-icon>
                     </b-button>
                     
@@ -54,7 +54,7 @@
         <b-card-footer footer-bg-variant="white">
             <b-row >
                 <b-col cols="2">
-                    <b-icon class="hover-animation" :icon="post.mylikes ? 'hand-thumbs-up-fill' : 'hand-thumbs-up'" variant="primary" font-scale="1.5"></b-icon>
+                    <b-icon class="hover-animation" :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" variant="primary" font-scale="1.5" @click="updateLike"></b-icon>
                 </b-col>
                 <b-col cols="10" class="text-right">
                     <nuxt-link :to="'/post/' + post.id">
@@ -80,7 +80,7 @@ export default {
     name: 'postCard',
     data: function () {
         return {
-            liked : false, 
+            like : 0, 
         }
     }, 
 
@@ -95,11 +95,26 @@ export default {
         postDate () { 
             return (new Date(this.post.date).toLocaleDateString() + ' à ' + new Date(this.post.date).toLocaleTimeString())
         }
-    }, 
+    },
 
     methods : {
         deletePost () {
             this.$emit('delete-post', {id : this.post.id})
+        }, 
+
+        async updateLike () {
+            try {
+                this.like = this.post.mylikes == 0 ? this.like = 1 : this.like = 0
+                console.log(this.like)
+                await this.$axios.post('/post/' + this.post.id + '/like', {like : this.like})
+                this.post.mylikes = this.like
+            } catch (e) {
+                console.log(e)
+            }
+        }, 
+
+        updatePost() {
+            console.log(this.post.mylikes)
         }
     }
 

@@ -29,7 +29,7 @@
         </div>
 
         <div>
-            <b-icon class="hover-animation pl-1" :icon="comment.mylikes ? 'hand-thumbs-up-fill' : 'hand-thumbs-up'" variant="primary" font-scale="1.5"></b-icon>
+            <b-icon class="hover-animation pl-1" :icon="comment.mylikes ? 'heart-fill' : 'heart'" variant="primary" font-scale="1.5" @click="updateLike"></b-icon>
         </div>
 
     </b-list-group-item>
@@ -38,6 +38,11 @@
 <script>
 export default {
     name : 'commentsListItem',
+    data : function () {
+        return {
+            like : 0
+        }
+    },
 
     props : {
         comment : Object
@@ -46,7 +51,18 @@ export default {
     methods : {
         commentDate : function (comment) { 
             return (new Date(comment.date).toLocaleDateString() + ' à ' + new Date(comment.date).toLocaleTimeString())
-        }
+        }, 
+        
+        async updateLike () {
+            try {
+                this.like = this.comment.mylikes == 0 ? this.like = 1 : this.like = 0
+                console.log('/post/comment/' + this.comment.id + '/like')
+                await this.$axios.post('/post/comment/' + this.comment.id + '/like', {like : this.like})
+                this.comment.mylikes = this.like
+            } catch (e) {
+                console.log(e)
+            }
+        }, 
     }
 
 }
