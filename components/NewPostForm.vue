@@ -30,7 +30,6 @@
                     placeholder="Choisissez votre fichier à télécharger"
                     drop-placeholder="Choisir le fichier à importer"
                     ></b-form-file>
-                    <div class="mt-3">Media à ajouter : {{ form.file ? form.file.name : '' }}</div>
 
                 <b-button block type="submit" variant="primary" class="mt-5">Poster</b-button>
             </b-form>
@@ -74,8 +73,6 @@
                     data.append('post', JSON.stringify(this.form.post))
                     
                     const post = !this.form.file ? this.form.post : data
-                    console.log(post)
-                    console.log(data)
 
                     await this.$axios.post('/post', post)
                     

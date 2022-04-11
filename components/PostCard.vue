@@ -2,17 +2,17 @@
 
     <b-card class="p-0 my-2">
         <b-card-header header-bg-variant="white" class="p-1" align-v="center">
-            <b-row cols="2">
-                <b-col>
+            <b-row>
+                <b-col cols="8">
                     <b-card-title>
                         <nuxt-link :to="'/profile/' + post.userId">
                             <b-img fluid :src="post.userImg" class='profilImage border-1 border-primary' thumbnail :alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
-                            <span>{{post.firstname}} {{post.lastname}}</span>
+                            <span class="h6">{{post.firstname}} {{post.lastname}}</span>
                         </nuxt-link>
                     </b-card-title>
                 </b-col>
 
-                <b-col v-if="!feed && post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
+                <b-col cols="4" v-if="!feed && post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
                     <b-button v-if="post.userId == user.userId" variant="secondary" size='sm' class="m-1">
                         <b-icon icon="pencil-square" variant="light" font-scale="1"></b-icon>
                     </b-button>
@@ -52,11 +52,11 @@
         </b-card-body>
 
         <b-card-footer footer-bg-variant="white">
-            <b-row cols="2">
-                <b-col>
+            <b-row >
+                <b-col cols="2">
                     <b-icon class="hover-animation" :icon="post.mylikes ? 'hand-thumbs-up-fill' : 'hand-thumbs-up'" variant="primary" font-scale="1.5"></b-icon>
                 </b-col>
-                <b-col class="text-right">
+                <b-col cols="10" class="text-right">
                     <nuxt-link :to="'/post/' + post.id">
                         <span>Commentaires </span>
                         <b-badge v-if="post.comments != 0" variant="secondary">{{post.comments}}</b-badge>

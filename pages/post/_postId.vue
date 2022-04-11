@@ -18,7 +18,9 @@
                 <b-collapse id="addComment" class="mt-2">
                     <b-row class="bg-light p-2">
                         <b-col>
-                            <CommentForm />
+                            <CommentForm 
+                                @refresh-comments="refreshComments"
+                            />
                         </b-col>
                     </b-row>
                 </b-collapse>
@@ -28,8 +30,27 @@
         <b-row class="mt-3 ml-2">
             <b-col cols="1" class="border-right"></b-col>
             <b-col cols="11">
-                <h3 class="h6">Commentaires</h3>
-                <CommentsList />
+
+                <div v-if="commentsCount != 0">
+                    <h3 class="h6">Commentaires</h3>
+
+                    <b-list-group flush>
+                        <CommentsListItem
+                            v-for="comment in comments"
+                            :key="comment.id"
+                            :comment="comment"
+                        />
+                    </b-list-group>
+
+                    <div v-if="commentsCount != commentsLoaded" class="w-100 d-flex justify-content-end m-2">
+                        <b-button size="sm" @click="nextPage()">Afficher plus de commentaires</b-button>
+                    </div>
+                </div>
+
+                <div v-else class="text-center">
+                    <span class="h6">Aucun commentaire</span>
+                </div>
+
             </b-col>
         </b-row>
 
@@ -44,13 +65,23 @@ export default {
 
     data : function () {
         return {
-            post : {}
+            post : {}, 
+            comments: [], 
+            commentsCount : 0,
+            page : 1
         }
+    },
+
+    computed : {
+        commentsLoaded () {return this.comments.length}
     },
 
     async mounted() {
         try {
             this.post = await this.$axios.$get('/post/' + this.$route.params.postId)
+            let res = await this.$axios.get('/post/' + this.$route.params.postId + '/comment/1/10')
+            this.comments = res.data.comments
+            this.commentsCount = res.data.commentsCount
         } catch (e) {
             console.log(e)
         } 
@@ -65,7 +96,31 @@ export default {
             } catch(e) {
                 console.log(e)
             }
-        }    
+        }, 
+        
+        nextPage : async function () {
+            try {
+                this.page += 1
+                let res = await this.$axios.get('/post/' + this.$route.params.postId + '/comment/' + this.page +'/10')
+                console.log(res)
+                this.comments = this.comments.concat(res.data.comments)
+                console.log(this.comments)
+            } catch(e) {
+                console.log(e)
+            }
+        }, 
+
+        async refreshComments(payload) {
+            try {
+                this.page = 1
+                let res = await this.$axios.get('/post/' + this.$route.params.postId + '/comment/1/10')
+                console.log('ok ça se met à jour')
+                this.comments = res.data.comments
+                this.commentsCount = res.data.commentsCount                
+            } catch(e) {
+                console.log(e)
+            }
+        }
     }
 
 }

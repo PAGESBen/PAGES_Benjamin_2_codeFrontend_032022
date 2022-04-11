@@ -18,8 +18,6 @@
                     id="comment"
                     v-model="form.comment.messageText"
                     type="textarea"
-                    placeholder="Ecrivez votre commentaire"
-                    
                     ></b-form-textarea>
                 </b-form-group>
 
@@ -29,7 +27,6 @@
                     placeholder="Ajouter une image, un gif ou une vidéo"
                     drop-placeholder="Choisir le fichier à importer"
                     ></b-form-file>
-                    <div class="mt-3">Media à ajouter : {{ form.file ? form.file.name : '' }}</div>
 
                 <b-button block type="submit" variant="primary" class="mt-5">Ajouter le commentaire</b-button>
             </b-form>
@@ -77,9 +74,14 @@ export default {
 
                     await this.$axios.post('/post/' + this.$route.params.postId + '/comment', comment)
 
+                    this.form.file = null
+                    this.form.comment.messageText = ''
+
                     this.alert.show = true
                     this.alert.message = "Commentaire posté avec succès"
                     this.alert.variant = 'success'
+
+                    this.$emit('refresh-comments')
                 
                 } catch (e) {
                     this.alert.show = true
