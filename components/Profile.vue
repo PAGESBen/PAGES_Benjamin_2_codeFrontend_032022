@@ -6,12 +6,6 @@
                     <b-img :src="profile.imageURL" thumbnail class="profile-img" alt="Profile Image"></b-img>        
                 </div>
                 
-                <!-- Bouton supprimer réservé aux administrateurs -->
-                <b-button v-if="!owner && this.$store.state.user.admin" variant="danger" class="m-2" @click="deleteUserProfile()">Supprimer l'utilisateur</b-button>
-                
-                <!-- bouton modifier réservé au propriétaire de la fiche -->
-                <b-button v-if="owner && !modify" variant="outline-primary" class="m-2" @click="modifyForm()">Modifier le profil</b-button>
-                
                 <div v-if="modify && form.file == null" class="change-profile-img">
                     <label for="change-profile-img-input">
                         <b-icon icon="upload" variant="dark" font-scale="1"></b-icon>
@@ -23,7 +17,29 @@
                     <b-icon icon="x-circle" variant="danger" font-scale="1"></b-icon>
                     Annuler changement
                 </span>
+                
+                <!-- bouton modifier réservé au propriétaire de la fiche -->
+                <b-button block v-if="owner && !modify" variant="outline-primary" class="m-2 button-width" @click="modifyForm()">Modifier</b-button>
 
+                <!-- Bouton supprimer réservé aux administrateurs ou au propriétaire -->
+                <b-button block v-if="owner || this.$store.state.user.admin" variant="danger" class="m-2 button-width" @click="$bvModal.show('cancelConfirmation')">Supprimer</b-button>
+                <b-modal id="cancelConfirmation" hide-footer>
+                    <template #modal-title>
+                        ATTENTION
+                    </template>
+                    <div class="d-block text-center text-danger">
+                        Attention cette action supprimera DEFINITIVEMENT votre profil utilisateur ainsi que l'ensemble de ses posts et commentaires.
+                    </div>
+                    <div class="m-2">
+                        <b-button class="mt-3" block variant="danger" @click="deleteUserProfile">
+                            <span v-if="!loading">Supprimer le profil</span>
+                            <span v-else>
+                                <b-spinner small></b-spinner>
+                            </span>
+                        </b-button>
+                        <b-button block class="mt-3" @click="$bvModal.hide('cancelConfirmation')">Annuler</b-button>
+                    </div>
+                </b-modal>
             </b-col>
         </b-row>
 
@@ -165,7 +181,8 @@ export default {
                 show : false, 
                 message : "", 
                 variant : "success"
-            }
+            },
+            modalShow: false
         }
     },
 
@@ -209,8 +226,7 @@ export default {
                     data.append('user', JSON.stringify(this.form.user))
                     
                     const user = !this.form.file ? this.form.user : data
-                    // console.log(user)
-                    // console.log(this.profile.id)
+                    console.log(user)
 
                     const res = await this.$axios.put('/user/' + this.profile.id, user)
 
@@ -222,7 +238,6 @@ export default {
                     this.alert.show = true
                     this.alert.message = "Profil mis à jour avec succès"
                     console.log('==========Profil mis à jour==========')
-
                 } catch (e) {
                     console.log(e)
                     this.loading = false
@@ -241,20 +256,15 @@ export default {
         deleteUserProfile : async function() {
             try{
                 this.loading = true
-                if(this.$route.params.userId === this.$store.state.user.userId) {
-                    this.loading = false
-                    this.alert.show = true
-                    this.alert.message = "Vous ne pouvez pas effacer votre propre profil"
-                    this.alert.variant = 'danger'
-                } else {
-                    await this.$axios.delete('/user/' + this.$route.params.userId)
-                    this.loading = false
-                    this.alert.show = true
-                    this.alert.message = "Ce profil a été supprimé"
-                    this.alert.variant = 'warning'
-                }
+                await this.$axios.delete('/user/' + this.$route.params.userId)
+                this.loading = false
+                this.$bvModal.hide('cancelConfirmation')
+                this.alert.show = true
+                this.alert.message = "Ce profil a été supprimé"
+                this.alert.variant = 'warning'
             } catch (e) {
                 this.loading = false
+                this.$bvModal.hide('cancelConfirmation')
                 this.modify = false
                 this.alert.show = true
                 this.alert.message = "Une erreur s'est produite veillez rééssayer ulterieurement"
@@ -298,6 +308,10 @@ export default {
     .hover-underline:hover {
         text-decoration-line: underline;
         cursor: pointer
+    }
+
+    .button-width {
+        max-width: 150px;
     }
 
 </style>
