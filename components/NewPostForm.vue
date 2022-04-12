@@ -29,7 +29,7 @@
                     :state="Boolean(form.file)"
                     placeholder="Choisissez votre fichier à télécharger"
                     drop-placeholder="Choisir le fichier à importer"
-                    ></b-form-file>
+                ></b-form-file>
 
                 <b-button block type="submit" variant="primary" class="mt-5">Poster</b-button>
             </b-form>

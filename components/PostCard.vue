@@ -12,9 +12,9 @@
                     </b-card-title>
                 </b-col>
 
-                <b-col cols="2" v-if="!feed" align-self="end" class="d-flex justify-content-end">
-                    <b-dropdown right id="postNav" variant="primary" class="m-2">
-                        <b-dropdown-item v-if="!feed && post.userId == user.userId" @click="updatePost"> Modifier le post </b-dropdown-item>
+                <b-col cols="2" v-if="!feed && (post.userId == user.userId || user.admin)" align-self="end" class="d-flex justify-content-end">
+                    <b-dropdown right id="postNav" variant="outline-primary" class="m-2">
+                        <b-dropdown-item v-if="!feed && post.userId == user.userId" @click="modifyPost"> Modifier le post </b-dropdown-item>
                         <b-dropdown-item v-if="!feed && (post.userId == user.userId || user.admin)" @click="deletePost"> Supprimer le post </b-dropdown-item>
                     </b-dropdown>
                 </b-col>
@@ -27,23 +27,51 @@
 
         <b-card-body class="p-2">
 
-            <b-card-text>{{post.messageText}}</b-card-text>
-            
-            <b-embed v-if="post.mediaType == 'video'"
-                type="iframe"
-                aspect="16by9"
-                :src="post.mediaURL"
-                allowfullscreen
-            ></b-embed>
+            <b-card-text v-if="!modify">{{post.messageText}}</b-card-text>
 
-            <!-- Comment gerer la partie alt -->
-            <b-card-img
-                v-if="post.mediaType == 'image'"
-                align="center"
-                :src="post.mediaURL" 
-                img-alt="post illustration"
-                img-top 
-            />
+            <b-form-textarea
+                v-else
+                v-model="form.post.messageText"
+                type="textarea"
+                class="m-2"
+                :placeholder="post.messageText == '' ? 'Ajouter un message' : ''"
+            ></b-form-textarea>
+
+            <div v-if="!form.post.removeImg">
+                <div class="position-relative">
+                    <b-embed 
+                        v-if="post.mediaType == 'video'"
+                        type="iframe"
+                        aspect="16by9"
+                        :src="post.mediaURL"
+                        allowfullscreen
+                    ></b-embed>
+
+                    <!-- Comment gerer la partie alt -->
+                    <b-card-img
+                        v-if="post.mediaType == 'image' || post.mediaType == 'gif'"
+                        align="center"
+                        :src="post.mediaURL" 
+                        img-alt="post illustration"
+                        img-top 
+                    />
+
+                    <b-button size="sm" variant="danger" class="position-absolute close-button" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> x </b-button>
+                </div>
+            </div>
+            <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
+                <b-form-file
+                    v-model="form.file"
+                    placeholder="Ajouter un image / gif / vidéo"
+                    drop-placeholder="Choisir le fichier à importer"
+                ></b-form-file>
+            </div>
+
+            <div v-if="modify" class="d-flex justify-content-end">
+                <b-button size="sm" class="m-2" variant="success" @click="updatePost">Valider</b-button>
+                <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
+            </div>
+
 
         </b-card-body>
 
@@ -64,9 +92,6 @@
     
     </b-card>
 
-
-    
-
 </template>
 
 <script>
@@ -76,7 +101,15 @@ export default {
     name: 'postCard',
     data: function () {
         return {
-            like : 0, 
+            like : 0,
+            modify : false,
+            form : {
+                file : null,
+                post : {
+                    messageText :'',
+                    removeImg : false
+                }
+            }
         }
     }, 
 
@@ -109,8 +142,33 @@ export default {
             }
         }, 
 
-        updatePost() {
-            console.log(this.post.mylikes)
+        modifyPost() {
+            this.modify = true
+            this.form.file = null
+            this.form.post.messageText = this.post.messageText
+            this.form.post.removeImg = false
+        }, 
+
+        cancelUpdate() {
+            this.modify = false
+            this.form.post.removeImg = false
+        }, 
+
+        async updatePost() {
+            try {
+                    const data = new FormData()
+                    data.append('file', this.form.file)
+                    data.append('post', JSON.stringify(this.form.post))
+                    
+                    const post = !this.form.file ? this.form.post : data
+
+                    await this.$axios.put('/post/' + this.post.id, post)
+
+                    this.modify = false
+
+            } catch (e) {
+                console.log(e)
+            }
         }
     }
 
@@ -130,5 +188,10 @@ export default {
         -ms-transform: scale(1.2);
         transform: scale(1.2);
         cursor: pointer
+    }
+
+    .close-button {
+        top:10px;
+        right: 10px;
     }
 </style>
