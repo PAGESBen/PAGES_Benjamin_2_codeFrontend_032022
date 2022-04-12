@@ -12,7 +12,7 @@
                     </b-card-title>
                 </b-col>
 
-                <b-col cols="2" v-if="!feed && post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
+                <b-col cols="2" v-if="!feed" align-self="end" class="d-flex justify-content-end">
                     <b-dropdown right id="postNav" variant="primary" class="m-2">
                         <b-dropdown-item v-if="!feed && post.userId == user.userId" @click="updatePost"> Modifier le post </b-dropdown-item>
                         <b-dropdown-item v-if="!feed && (post.userId == user.userId || user.admin)" @click="deletePost"> Supprimer le post </b-dropdown-item>

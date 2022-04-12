@@ -17,7 +17,7 @@
                     <b-icon icon="x-circle" variant="danger" font-scale="1"></b-icon>
                     Annuler changement
                 </span>
-                
+
                 <!-- bouton modifier réservé au propriétaire de la fiche -->
                 <b-button block v-if="owner && !modify" variant="outline-primary" class="m-2 button-width" @click="modifyForm()">Modifier</b-button>
 
@@ -189,11 +189,8 @@ export default {
     async mounted() {
         
         try{
-            
             const userId = this.$route.params.userId == undefined ? this.$store.state.user.userId : this.$route.params.userId
-
             this.profile = await this.$axios.$get('/user/' + userId)
-
             if(this.profile.id === this.$store.state.user.userId) {
                 this.owner = true
             }
@@ -243,7 +240,7 @@ export default {
                     this.loading = false
                     this.modify = false
                     this.alert.show = true
-                    this.alert.message = "Une erreur s'est produite veillez rééssayer ulterieurement"
+                    this.alert.message = "Une erreur s'est produite veuillez rééssayer ulterieurement"
                     this.alert.variant = 'danger'
                 }
         },
@@ -256,12 +253,17 @@ export default {
         deleteUserProfile : async function() {
             try{
                 this.loading = true
-                await this.$axios.delete('/user/' + this.$route.params.userId)
+                await this.$axios.delete('/user/' + this.profile.id)
                 this.loading = false
                 this.$bvModal.hide('cancelConfirmation')
                 this.alert.show = true
                 this.alert.message = "Ce profil a été supprimé"
                 this.alert.variant = 'warning'
+                console.log(this.profile.id)
+                console.log(this.$store.state.user.iserId)
+                if(this.profile.id === this.$store.state.user.userId) {
+                    this.$store.commit('LOGOUT_USER')
+                }
             } catch (e) {
                 this.loading = false
                 this.$bvModal.hide('cancelConfirmation')
