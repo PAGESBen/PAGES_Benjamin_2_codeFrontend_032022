@@ -115,11 +115,15 @@
                 </b-row>
 
                 <b-row class="py-3 w-100 m-0 p-0">
-                    <b-button variant="primary" @click.prevent="modifyUserProfile()">
+                    <b-button variant="primary" class="m-2" @click.prevent="modifyUserProfile()">
                         <span v-if="!loading">modifier</span>
                         <span v-else>
                             <b-spinner small></b-spinner>
                         </span>
+                        </b-button>
+
+                        <b-button variant="danger" class="m-2" @click.prevent="cancelUpdate()">
+                            annuler
                         </b-button>
                 </b-row>
             </b-form>
@@ -169,7 +173,6 @@ export default {
         
         try{
             
-            console.log(this.profile)
             const userId = this.$route.params.userId == undefined ? this.$store.state.user.userId : this.$route.params.userId
 
             this.profile = await this.$axios.$get('/user/' + userId)
@@ -228,7 +231,12 @@ export default {
                     this.alert.message = "Une erreur s'est produite veillez rééssayer ulterieurement"
                     this.alert.variant = 'danger'
                 }
-        }, 
+        },
+
+        cancelUpdate : function () {
+            this.modify = false
+            this.form.file = null
+        },
 
         deleteUserProfile : async function() {
             try{

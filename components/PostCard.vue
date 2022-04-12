@@ -3,7 +3,7 @@
     <b-card class="p-0 my-2">
         <b-card-header header-bg-variant="white" class="p-1" align-v="center">
             <b-row>
-                <b-col cols="8">
+                <b-col cols="10">
                     <b-card-title>
                         <nuxt-link :to="'/profile/' + post.userId">
                             <b-img fluid :src="post.userImg" class='profilImage border-1 border-primary' thumbnail :alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
@@ -12,17 +12,13 @@
                     </b-card-title>
                 </b-col>
 
-                <b-col cols="4" v-if="!feed && post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
-                    <b-button v-if="post.userId == user.userId" variant="secondary" size='sm' class="m-1" @click="updatePost">
-                        <b-icon icon="pencil-square" variant="light" font-scale="1"></b-icon>
-                    </b-button>
-                    
-                    <b-button v-if="post.userId == user.userId || user.admin" variant="danger" size='sm' class="m-1" @click="deletePost()">
-                        <b-icon icon="trash-fill" variant="light" font-scale="1"></b-icon>
-                    </b-button>
+                <b-col cols="2" v-if="!feed && post.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
+                    <b-dropdown right id="postNav" variant="primary" class="m-2">
+                        <b-dropdown-item v-if="!feed && post.userId == user.userId" @click="updatePost"> Modifier le post </b-dropdown-item>
+                        <b-dropdown-item v-if="!feed && (post.userId == user.userId || user.admin)" @click="deletePost"> Supprimer le post </b-dropdown-item>
+                    </b-dropdown>
                 </b-col>
             </b-row>
-
 
             <b-row class="m-0 p-1">
                 <b-card-sub-title sub-title-text-variant='muted small'>Posté le {{postDate}}</b-card-sub-title>
