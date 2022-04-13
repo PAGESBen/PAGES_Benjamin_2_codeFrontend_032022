@@ -18,7 +18,7 @@
                     </b-col>
 
                     <b-col cols="2" v-if="!feed && (post.userId == user.userId || user.admin)" align-self="end" class="d-flex justify-content-end">
-                        <b-dropdown right id="postNav" variant="outline-primary" class="m-2">
+                        <b-dropdown size="sm" right id="postNav" variant="outline-primary" class="m-2">
                             <b-dropdown-item v-if="!feed && post.userId == user.userId" @click="modifyPost"> Modifier le post </b-dropdown-item>
                             <b-dropdown-item v-if="!feed && (post.userId == user.userId || user.admin)" @click="deletePost"> Supprimer le post </b-dropdown-item>
                         </b-dropdown>
@@ -30,8 +30,10 @@
                 </b-row>
             </b-card-header>
 
-                <nuxt-link :to="'/post/'+ post.id" :disabled="!feed" :class="feed ? 'postActiveLink' : 'postDesableLink'">
-                <b-card-body class="p-2">
+
+                <b-card-body class="p-2 position-relative">
+
+                    <nuxt-link v-if="feed" :to="'/post/'+ post.id" class="position-absolute coverBody postActiveLink"></nuxt-link>
 
                         <b-card-text v-if="!modify">{{post.messageText}}</b-card-text>
 
@@ -65,7 +67,7 @@
                                 <b-button size="sm" variant="danger" class="position-absolute close-button" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> x </b-button>
                             </div>
                         </div>
-                       <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
+                    <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
                             <b-form-file
                                 v-model="form.file"
                                 placeholder="Ajouter un image / gif / vidéo"
@@ -78,7 +80,6 @@
                             <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
                         </div> 
                 </b-card-body>
-            </nuxt-link>
             <b-card-footer footer-bg-variant="white">
                 <b-row >
                     <b-col cols="2">
@@ -178,6 +179,8 @@ export default {
                 this.alert.show = true
                 this.alert.message='Post mis à jour avec succès'
 
+                this.form.post.removeImg = false
+
             } catch (e) {
                 console.log(e)
             }
@@ -216,10 +219,16 @@ export default {
         color: black;
     }
 
-    .postDesableLink:hover, .postDesableLink:active {
-        text-decoration: none;
-        color: black;
-        cursor: default;
+    .postActiveLink:active {
+        border : 1px grey solid;
+    }
+
+    .coverBody {
+        top : 0;
+        bottom : 0;
+        right : 0; 
+        left : 0;
+        z-index: 1
     }
 
 </style>

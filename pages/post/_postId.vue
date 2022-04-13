@@ -40,6 +40,7 @@
                             v-for="comment in comments"
                             :key="comment.id"
                             :comment="comment"
+                            @refresh-comments="refreshComments"
                         />
                     </b-list-group>
 
@@ -116,7 +117,8 @@ export default {
                 this.page = 1
                 let res = await this.$axios.get('/post/' + this.$route.params.postId + '/comment/1/10')
                 this.comments = res.data.comments
-                this.commentsCount = res.data.commentsCount                
+                this.commentsCount = res.data.commentsCount
+                console.log(this.comments)           
             } catch(e) {
                 console.log(e)
             }

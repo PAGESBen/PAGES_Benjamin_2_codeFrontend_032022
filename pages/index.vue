@@ -4,7 +4,11 @@
 
 <script>
   export default {
-    name: 'IndexPage',
+    name: 'homePage',
+
+    mounted() {
+      this.$store.commit('ACTIVE_NAV', 'homePage')
+    }
 }
 
 </script>

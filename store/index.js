@@ -41,6 +41,10 @@ export const mutations = {
       admin : false
     }
     this.$router.push('/')
+  }, 
+
+  ACTIVE_NAV : function (state, payload) {
+    state.activeNav = payload
   }
 }
 

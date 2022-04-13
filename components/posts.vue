@@ -2,7 +2,6 @@
     <div>
         <PostCard v-for="post in posts.posts" :key="post.id"
             :post="post" feed />
-    
 
         <!--pagination -->
         <b-row class="my-5">

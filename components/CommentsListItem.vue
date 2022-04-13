@@ -151,6 +151,9 @@ export default {
                 this.alert.show = true
                 this.alert.variant = 'success'
                 this.alert.message = 'Commentaire modifié !'
+                this.$emit('refresh-comments')
+
+                this.form.comment.removeImg = false
 
             } catch (e) {
                 this.alert.show = true

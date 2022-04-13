@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-container fluid class="min-viewport-height m-0 p-0">
-            
+
             <!-- =======si non loged======= -->
             <b-row v-if="user.userId  == '-1'" class="min-viewport-height m-auto" align-content="center" align-h="center">
                 <b-col lg="4" class="d-flex justify-content-center align-items-center">
