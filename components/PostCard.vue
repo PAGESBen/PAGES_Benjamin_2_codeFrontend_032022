@@ -65,7 +65,7 @@
                                 <b-button size="sm" variant="danger" class="position-absolute close-button" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> x </b-button>
                             </div>
                         </div>
-                        <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
+                       <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
                             <b-form-file
                                 v-model="form.file"
                                 placeholder="Ajouter un image / gif / vidéo"
@@ -76,7 +76,7 @@
                         <div v-if="modify" class="d-flex justify-content-end">
                             <b-button size="sm" class="m-2" variant="success" @click="updatePost">Valider</b-button>
                             <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
-                        </div>
+                        </div> 
                 </b-card-body>
             </nuxt-link>
             <b-card-footer footer-bg-variant="white">
