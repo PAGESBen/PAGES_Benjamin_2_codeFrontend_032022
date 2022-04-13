@@ -18,11 +18,11 @@
                 </div>
             </b-col>
 
-            <b-col v-if="comment.userId == this.$store.state.user.userId" cols="2">
-                <b-button size="sm" :variant="!modify ? 'outline-primary' : 'outline-danger'" @click="modifyForm">
-                    <b-icon v-if="!modify" icon="pencil" font-scale="1"></b-icon>
-                    <b-icon v-if="modify" icon="x-square-fill" font-scale="1"></b-icon>
-                </b-button>
+            <b-col cols="2" v-if="comment.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
+                <b-dropdown size="sm" right id="postNav" variant="outline-primary" class="m-2">
+                    <b-dropdown-item v-if="comment.userId == user.userId" @click="modifyForm"> Modifier</b-dropdown-item>
+                    <b-dropdown-item v-if="comment.userId == user.userId || user.admin" @click="deleteComment"> Supprimer</b-dropdown-item>
+                </b-dropdown>
             </b-col>
         </b-row>
         <div class="mb-3">
@@ -67,6 +67,7 @@
 
             <div v-if="modify" class="d-flex justify-content-end">
                 <b-button size="sm" class="m-2" variant="success" @click="updateComment">Valider</b-button>
+                <b-button size="sm" class="m-2" variant="danger" @click="modifyForm">Annuler</b-button>
             </div> 
 
         </div>
@@ -79,6 +80,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
     name : 'commentsListItem',
     data : function () {
@@ -102,6 +105,10 @@ export default {
 
     props : {
         comment : Object
+    },
+
+    computed : {
+        ...mapState(['user'])
     },
 
     methods : {
@@ -149,6 +156,19 @@ export default {
                 this.alert.show = true
                 this.alert.variant = 'danger'
                 this.alert.message = 'Modification impossible !'
+                console.log(e)
+            }
+        }, 
+
+        async deleteComment() {
+            try {
+                await this.$axios.delete('/post/comment/'+this.comment.id)
+                console.log('=====Commentaire supprimé======')
+                this.$emit('refresh-comments')
+            } catch(e) {
+                this.alert.show = true
+                this.alert.variant = 'danger'
+                this.alert.message = 'Supression impossible !'
                 console.log(e)
             }
         }
