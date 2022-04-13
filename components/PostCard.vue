@@ -30,64 +30,62 @@
                 </b-row>
             </b-card-header>
 
-            <b-card-body class="p-2">
                 <nuxt-link :to="'/post/'+ post.id" :disabled="!feed" :class="feed ? 'postActiveLink' : 'postDesableLink'">
+                <b-card-body class="p-2">
 
-                    <b-card-text v-if="!modify">{{post.messageText}}</b-card-text>
+                        <b-card-text v-if="!modify">{{post.messageText}}</b-card-text>
 
-                    <b-form-textarea
-                        v-else
-                        v-model="form.post.messageText"
-                        type="textarea"
-                        class="m-2"
-                        :placeholder="post.messageText == '' ? 'Ajouter un message' : ''"
-                    ></b-form-textarea>
+                        <b-form-textarea
+                            v-else
+                            v-model="form.post.messageText"
+                            type="textarea"
+                            class="m-2"
+                            :placeholder="post.messageText == '' ? 'Ajouter un message' : ''"
+                        ></b-form-textarea>
 
-                    <div v-if="!form.post.removeImg">
-                        <div class="position-relative">
-                            <b-embed 
-                                v-if="post.mediaType == 'video'"
-                                type="iframe"
-                                aspect="16by9"
-                                :src="post.mediaURL"
-                                allowfullscreen
-                            ></b-embed>
+                        <div v-if="!form.post.removeImg">
+                            <div class="position-relative">
+                                <b-embed 
+                                    v-if="post.mediaType == 'video'"
+                                    type="iframe"
+                                    aspect="16by9"
+                                    :src="post.mediaURL"
+                                    allowfullscreen
+                                ></b-embed>
 
-                            <!-- Comment gerer la partie alt -->
-                            <b-card-img
-                                v-if="post.mediaType == 'image' || post.mediaType == 'gif'"
-                                align="center"
-                                :src="post.mediaURL" 
-                                img-alt="post illustration"
-                                img-top 
-                            />
+                                <!-- Comment gerer la partie alt -->
+                                <b-card-img
+                                    v-if="post.mediaType == 'image' || post.mediaType == 'gif'"
+                                    align="center"
+                                    :src="post.mediaURL" 
+                                    img-alt="post illustration"
+                                    img-top 
+                                />
 
-                            <b-button size="sm" variant="danger" class="position-absolute close-button" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> x </b-button>
+                                <b-button size="sm" variant="danger" class="position-absolute close-button" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> x </b-button>
+                            </div>
                         </div>
-                    </div>
-                    <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
-                        <b-form-file
-                            v-model="form.file"
-                            placeholder="Ajouter un image / gif / vidéo"
-                            drop-placeholder="Choisir le fichier à importer"
-                        ></b-form-file>
-                    </div>
+                        <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
+                            <b-form-file
+                                v-model="form.file"
+                                placeholder="Ajouter un image / gif / vidéo"
+                                drop-placeholder="Choisir le fichier à importer"
+                            ></b-form-file>
+                        </div>
 
-                    <div v-if="modify" class="d-flex justify-content-end">
-                        <b-button size="sm" class="m-2" variant="success" @click="updatePost">Valider</b-button>
-                        <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
-                    </div>
-
-                </nuxt-link>
-            </b-card-body>
-
+                        <div v-if="modify" class="d-flex justify-content-end">
+                            <b-button size="sm" class="m-2" variant="success" @click="updatePost">Valider</b-button>
+                            <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
+                        </div>
+                </b-card-body>
+            </nuxt-link>
             <b-card-footer footer-bg-variant="white">
                 <b-row >
                     <b-col cols="2">
                         <b-icon class="hover-animation" :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" variant="primary" font-scale="1.5" @click="updateLike"></b-icon>
                     </b-col>
                     <b-col cols="10" class="text-right">
-                        <nuxt-link :to="'/post/' + post.id">
+                        <nuxt-link v-if="feed" :to="'/post/' + post.id">
                             <span>Commentaires </span>
                             <b-badge v-if="post.comments != 0" variant="secondary">{{post.comments}}</b-badge>
                         </nuxt-link>             

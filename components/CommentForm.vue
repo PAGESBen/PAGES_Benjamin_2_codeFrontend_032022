@@ -23,7 +23,6 @@
 
                 <b-form-file
                     v-model="form.file"
-                    :state="Boolean(form.file)"
                     placeholder="Ajouter une image, un gif ou une vidéo"
                     drop-placeholder="Choisir le fichier à importer"
                     ></b-form-file>
