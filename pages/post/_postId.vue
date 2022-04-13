@@ -5,6 +5,7 @@
                 <PostCard
                     :post="post"
                     @delete-post="deletePost"
+                    @refreh-post="refreshPost"
                 />
             </b-col>
         </b-row>
@@ -114,13 +115,22 @@ export default {
             try {
                 this.page = 1
                 let res = await this.$axios.get('/post/' + this.$route.params.postId + '/comment/1/10')
-                console.log('ok ça se met à jour')
                 this.comments = res.data.comments
                 this.commentsCount = res.data.commentsCount                
             } catch(e) {
                 console.log(e)
             }
+        }, 
+
+        async refreshPost(payload) {
+            try {
+                this.post = await this.$axios.$get('/post/' + this.$route.params.postId)
+                console.log(this.post)
+            } catch(e) {
+                console.log(e)
+            }
         }
+
     }
 
 }

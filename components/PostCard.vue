@@ -1,97 +1,103 @@
 <template>
+    <div>
 
-    <b-card class="p-0 my-2">
-        <b-card-header header-bg-variant="white" class="p-1" align-v="center">
-            <b-row>
-                <b-col cols="10">
-                    <b-card-title>
-                        <nuxt-link :to="'/profile/' + post.userId">
-                            <b-img fluid :src="post.userImg" class='profilImage border-1 border-primary' thumbnail :alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
-                            <span class="h6">{{post.firstname}} {{post.lastname}}</span>
-                        </nuxt-link>
-                    </b-card-title>
-                </b-col>
+        <b-alert :show="alert.show" dismissible :variant="alert.variant" class="w-100">
+            {{alert.message}}
+        </b-alert>
 
-                <b-col cols="2" v-if="!feed && (post.userId == user.userId || user.admin)" align-self="end" class="d-flex justify-content-end">
-                    <b-dropdown right id="postNav" variant="outline-primary" class="m-2">
-                        <b-dropdown-item v-if="!feed && post.userId == user.userId" @click="modifyPost"> Modifier le post </b-dropdown-item>
-                        <b-dropdown-item v-if="!feed && (post.userId == user.userId || user.admin)" @click="deletePost"> Supprimer le post </b-dropdown-item>
-                    </b-dropdown>
-                </b-col>
-            </b-row>
+        <b-card class="p-0 my-2">
+            <b-card-header header-bg-variant="white" class="p-1" align-v="center">
+                <b-row>
+                    <b-col cols="10">
+                        <b-card-title>
+                            <nuxt-link :to="'/profile/' + post.userId">
+                                <b-img fluid :src="post.userImg" class='profilImage border-1 border-primary' thumbnail :alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
+                                <span class="h6">{{post.firstname}} {{post.lastname}}</span>
+                            </nuxt-link>
+                        </b-card-title>
+                    </b-col>
 
-            <b-row class="m-0 p-1">
-                <b-card-sub-title sub-title-text-variant='muted small'>Posté le {{postDate}}</b-card-sub-title>
-            </b-row>
-        </b-card-header>
+                    <b-col cols="2" v-if="!feed && (post.userId == user.userId || user.admin)" align-self="end" class="d-flex justify-content-end">
+                        <b-dropdown right id="postNav" variant="outline-primary" class="m-2">
+                            <b-dropdown-item v-if="!feed && post.userId == user.userId" @click="modifyPost"> Modifier le post </b-dropdown-item>
+                            <b-dropdown-item v-if="!feed && (post.userId == user.userId || user.admin)" @click="deletePost"> Supprimer le post </b-dropdown-item>
+                        </b-dropdown>
+                    </b-col>
+                </b-row>
 
-        <b-card-body class="p-2">
+                <b-row class="m-0 p-1">
+                    <b-card-sub-title sub-title-text-variant='muted small'>Posté le {{postDate}}</b-card-sub-title>
+                </b-row>
+            </b-card-header>
 
-            <b-card-text v-if="!modify">{{post.messageText}}</b-card-text>
+            <b-card-body class="p-2">
+                <nuxt-link :to="'/post/'+ post.id" :disabled="!feed" :class="feed ? 'postActiveLink' : 'postDesableLink'">
 
-            <b-form-textarea
-                v-else
-                v-model="form.post.messageText"
-                type="textarea"
-                class="m-2"
-                :placeholder="post.messageText == '' ? 'Ajouter un message' : ''"
-            ></b-form-textarea>
+                    <b-card-text v-if="!modify">{{post.messageText}}</b-card-text>
 
-            <div v-if="!form.post.removeImg">
-                <div class="position-relative">
-                    <b-embed 
-                        v-if="post.mediaType == 'video'"
-                        type="iframe"
-                        aspect="16by9"
-                        :src="post.mediaURL"
-                        allowfullscreen
-                    ></b-embed>
+                    <b-form-textarea
+                        v-else
+                        v-model="form.post.messageText"
+                        type="textarea"
+                        class="m-2"
+                        :placeholder="post.messageText == '' ? 'Ajouter un message' : ''"
+                    ></b-form-textarea>
 
-                    <!-- Comment gerer la partie alt -->
-                    <b-card-img
-                        v-if="post.mediaType == 'image' || post.mediaType == 'gif'"
-                        align="center"
-                        :src="post.mediaURL" 
-                        img-alt="post illustration"
-                        img-top 
-                    />
+                    <div v-if="!form.post.removeImg">
+                        <div class="position-relative">
+                            <b-embed 
+                                v-if="post.mediaType == 'video'"
+                                type="iframe"
+                                aspect="16by9"
+                                :src="post.mediaURL"
+                                allowfullscreen
+                            ></b-embed>
 
-                    <b-button size="sm" variant="danger" class="position-absolute close-button" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> x </b-button>
-                </div>
-            </div>
-            <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
-                <b-form-file
-                    v-model="form.file"
-                    placeholder="Ajouter un image / gif / vidéo"
-                    drop-placeholder="Choisir le fichier à importer"
-                ></b-form-file>
-            </div>
+                            <!-- Comment gerer la partie alt -->
+                            <b-card-img
+                                v-if="post.mediaType == 'image' || post.mediaType == 'gif'"
+                                align="center"
+                                :src="post.mediaURL" 
+                                img-alt="post illustration"
+                                img-top 
+                            />
 
-            <div v-if="modify" class="d-flex justify-content-end">
-                <b-button size="sm" class="m-2" variant="success" @click="updatePost">Valider</b-button>
-                <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
-            </div>
+                            <b-button size="sm" variant="danger" class="position-absolute close-button" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> x </b-button>
+                        </div>
+                    </div>
+                    <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
+                        <b-form-file
+                            v-model="form.file"
+                            placeholder="Ajouter un image / gif / vidéo"
+                            drop-placeholder="Choisir le fichier à importer"
+                        ></b-form-file>
+                    </div>
 
+                    <div v-if="modify" class="d-flex justify-content-end">
+                        <b-button size="sm" class="m-2" variant="success" @click="updatePost">Valider</b-button>
+                        <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
+                    </div>
 
-        </b-card-body>
+                </nuxt-link>
+            </b-card-body>
 
-        <b-card-footer footer-bg-variant="white">
-            <b-row >
-                <b-col cols="2">
-                    <b-icon class="hover-animation" :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" variant="primary" font-scale="1.5" @click="updateLike"></b-icon>
-                </b-col>
-                <b-col cols="10" class="text-right">
-                    <nuxt-link :to="'/post/' + post.id">
-                        <span>Commentaires </span>
-                        <b-badge v-if="post.comments != 0" variant="secondary">{{post.comments}}</b-badge>
-                    </nuxt-link>             
-                </b-col>
+            <b-card-footer footer-bg-variant="white">
+                <b-row >
+                    <b-col cols="2">
+                        <b-icon class="hover-animation" :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" variant="primary" font-scale="1.5" @click="updateLike"></b-icon>
+                    </b-col>
+                    <b-col cols="10" class="text-right">
+                        <nuxt-link :to="'/post/' + post.id">
+                            <span>Commentaires </span>
+                            <b-badge v-if="post.comments != 0" variant="secondary">{{post.comments}}</b-badge>
+                        </nuxt-link>             
+                    </b-col>
 
-            </b-row>
-        </b-card-footer>
-    
-    </b-card>
-
+                </b-row>
+            </b-card-footer>
+        
+        </b-card>
+    </div>
 </template>
 
 <script>
@@ -109,6 +115,11 @@ export default {
                     messageText :'',
                     removeImg : false
                 }
+            },
+            alert : {
+                show : false, 
+                message : "", 
+                variant : "success"
             }
         }
     }, 
@@ -156,15 +167,18 @@ export default {
 
         async updatePost() {
             try {
-                    const data = new FormData()
-                    data.append('file', this.form.file)
-                    data.append('post', JSON.stringify(this.form.post))
-                    
-                    const post = !this.form.file ? this.form.post : data
+                const data = new FormData()
+                data.append('file', this.form.file)
+                data.append('post', JSON.stringify(this.form.post))
+                
+                const post = !this.form.file ? this.form.post : data
 
-                    await this.$axios.put('/post/' + this.post.id, post)
+                await this.$axios.put('/post/' + this.post.id, post)
 
-                    this.modify = false
+                this.modify = false
+                this.$emit('refreh-post')
+                this.alert.show = true
+                this.alert.message='Post mis à jour avec succès'
 
             } catch (e) {
                 console.log(e)
@@ -194,4 +208,20 @@ export default {
         top:10px;
         right: 10px;
     }
+
+    .postActiveLink, .postDesableLink {
+        color : black;
+    }
+
+    .postActiveLink:hover, .postActiveLink:active  {
+        text-decoration: none;
+        color: black;
+    }
+
+    .postDesableLink:hover, .postDesableLink:active {
+        text-decoration: none;
+        color: black;
+        cursor: default;
+    }
+
 </style>
