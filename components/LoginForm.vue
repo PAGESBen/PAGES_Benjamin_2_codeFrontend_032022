@@ -120,10 +120,6 @@
                         <b-link href="#" v-if="mode == 'login'" @click="switchToRegister()">Je n'ai pas encore de compte</b-link>
                         <b-link href="#" v-if="mode == 'register'" @click="switchToLogin()">J'ai déjà un compte</b-link>
                     </b-col>
-                    <b-col>
-                        <b-button @click="consoleLog()">test computed</b-button>
-                    </b-col>
-                    
                 </b-row>
             </b-form>
         </b-row>
@@ -217,10 +213,6 @@
                     this.fieldAlert = true
                 }
             }, 
-
-            consoleLog : function () {
-                return console.log(this.validateFields)
-            }
         }
     }
 </script>
