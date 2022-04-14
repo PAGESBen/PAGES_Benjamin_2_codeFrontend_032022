@@ -7,7 +7,7 @@
         <b-row class="my-5">
             <b-col>
                 <div v-if="posts.postsCount != postsLoaded" class="w-100 d-flex justify-content-end m-2">
-                    <b-button size="sm" @click="nextPage()">Afficher plus de posts</b-button>
+                    <b-button variant="secondary" size="sm" @click="nextPage()">Afficher plus de posts</b-button>
                 </div>
             </b-col>
         </b-row>

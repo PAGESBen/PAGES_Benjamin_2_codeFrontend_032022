@@ -11,8 +11,8 @@
                     <b-col cols="10">
                         <b-card-title>
                             <nuxt-link :to="'/profile/' + post.userId">
-                                <b-img fluid :src="post.userImg" class='profilImage border-1 border-primary' thumbnail :alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
-                                <span class="h6">{{post.firstname}} {{post.lastname}}</span>
+                                <b-img fluid :src="post.userImg" class='profilImage border-1 border-secondary' thumbnail :alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
+                                <span class="h6 text-secondary">{{post.firstname}} {{post.lastname}}</span>
                             </nuxt-link>
                         </b-card-title>
                     </b-col>
@@ -41,7 +41,7 @@
                             v-else
                             v-model="form.post.messageText"
                             type="textarea"
-                            class="m-2"
+                            class="my-2"
                             :placeholder="post.messageText == '' ? 'Ajouter un message' : ''"
                         ></b-form-textarea>
 
@@ -83,7 +83,7 @@
             <b-card-footer footer-bg-variant="white">
                 <b-row >
                     <b-col cols="2">
-                        <b-icon class="hover-animation" :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" variant="primary" font-scale="1.5" @click="updateLike"></b-icon>
+                        <b-icon class="hover-animation" :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" variant="secondary" font-scale="1.5" @click="updateLike"></b-icon>
                     </b-col>
                     <b-col cols="10" class="text-right">
                         <nuxt-link v-if="feed" :to="'/post/' + post.id">

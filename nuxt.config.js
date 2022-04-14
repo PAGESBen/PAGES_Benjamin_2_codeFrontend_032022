@@ -17,7 +17,8 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
+  css: [ //!jeremy scss ici?!?
+    '~assets/scss/custom.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -28,9 +29,24 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
+  buildModules: [ // style-ressources permet d'avoir accès au scss sans avoir à importer les variables
+    '@nuxtjs/style-resources'
   ],
+  styleResources: {
+    scss: [
+      '~assets/scss/variables.scss'
+    ], 
+    hoistUseStatements: true
+  },
 
+  module: {
+    rules: [
+      {
+          test: /\.s[ac]ss$/i,
+          use: ['style-loader','css-loader','sass-loader'],
+      },   
+    ],
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
@@ -39,7 +55,9 @@ export default {
     '@nuxtjs/axios',
   ],
   bootstrapVue: {
-    icons: true
+    icons: true,
+    bootstrapCSS: false, 
+    bootstrapVueCSS: false
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

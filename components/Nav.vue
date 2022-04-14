@@ -21,9 +21,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    // @import '../assets/scss/variables.scss';
     .nuxt-link-exact-active {
-        background : black;
+        background : $primary;
         color : white
     }
 </style>

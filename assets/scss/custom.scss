@@ -1,0 +1,5 @@
+@import './variables.scss';
+
+//Ajout de bootstrap et bootstrap vue (l'ordre à son importance)
+@import 'bootstrap/scss/bootstrap.scss';
+@import 'bootstrap-vue/src/index.scss';

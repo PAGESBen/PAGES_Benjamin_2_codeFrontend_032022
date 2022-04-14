@@ -15,7 +15,7 @@
             
             <!-- ========Si loged========= -->
             <div v-else>  
-                <b-container class="bg-dark" fluid>
+                <b-container class="bg-primary" fluid>
                     <b-container fluid='lg'>
                         <b-row>
                             <HeaderNav/>

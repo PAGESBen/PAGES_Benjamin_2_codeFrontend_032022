@@ -32,7 +32,7 @@
                 v-else
                 v-model="form.comment.messageText"
                 type="textarea"
-                class="m-2"
+                class="my-2"
                 :placeholder="comment.messageText == '' ? 'Ajouter un message' : ''"
             ></b-form-textarea>
 
@@ -73,7 +73,7 @@
         </div>
 
         <div>
-            <b-icon class="hover-animation pl-1" :icon="comment.mylikes ? 'heart-fill' : 'heart'" variant="primary" font-scale="1.5" @click="updateLike"></b-icon>
+            <b-icon class="hover-animation pl-1" :icon="comment.mylikes ? 'heart-fill' : 'heart'" variant="secondary" font-scale="1.5" @click="updateLike"></b-icon>
         </div>
 
     </b-list-group-item>
