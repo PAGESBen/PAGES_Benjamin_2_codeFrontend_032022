@@ -6,15 +6,9 @@
         <!--pagination -->
         <b-row class="my-5">
             <b-col>
-               <b-pagination
-                    v-model="page"
-                    :total-rows="posts.postsCount"
-                    :per-page="limit"
-                    size="sm"
-                    align="center"
-                    class="my-5"
-                    @change="nextPage"
-                    ></b-pagination>
+                <div v-if="posts.postsCount != postsLoaded" class="w-100 d-flex justify-content-end m-2">
+                    <b-button size="sm" @click="nextPage()">Afficher plus de posts</b-button>
+                </div>
             </b-col>
         </b-row>
     </div>
@@ -24,16 +18,22 @@
 export default {
     data() {
         return {
-            posts : {},
+            posts : {
+                posts : []
+            },
             page : 1,
             limit : 20
         }
-    }, 
+    },
+
+    computed : {
+        postsLoaded () {return this.posts.posts.length}
+    },
+
 
     async mounted() {
         try {
             this.posts = await this.$axios.$get('/post/' + this.page + '/' + this.limit)
-            // console.log(this.posts)
         } catch (e) {
             console.log(e)
         }
@@ -42,8 +42,9 @@ export default {
     methods : {
         async nextPage() {
             try {
-                this.posts = await this.$axios.$get('/post/' + this.page + '/' + this.limit)
-                console.log(this.posts)
+                this.page += 1
+                let res = await this.$axios.$get('/post/' + this.page + '/' + this.limit)
+                this.posts.posts = this.posts.posts.concat(res.posts)
             } catch (e) {
                 console.log(e)
             } 

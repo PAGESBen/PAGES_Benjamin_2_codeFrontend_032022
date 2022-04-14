@@ -106,7 +106,6 @@ export default {
                 let res = await this.$axios.get('/post/' + this.$route.params.postId + '/comment/' + this.page +'/10')
                 console.log(res)
                 this.comments = this.comments.concat(res.data.comments)
-                console.log(this.comments)
             } catch(e) {
                 console.log(e)
             }
