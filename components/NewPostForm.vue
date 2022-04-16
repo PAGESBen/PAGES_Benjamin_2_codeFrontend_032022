@@ -15,21 +15,21 @@
             <b-form id="postForm" @submit.prevent="onSubmit">
                 <b-form-group
                 id="post"
-                label="Post your message:"
+                label="Message"
                 label-for="post"
                 >
                     <b-form-textarea
                     id="post"
                     v-model="form.post.messageText"
                     type="textarea"
-                    placeholder="add your comment"
+                    placeholder="Ecrivez votre message ici"
                     
                     ></b-form-textarea>
                 </b-form-group>
 
                 <b-form-file
                     v-model="form.file"
-                    :state="Boolean(form.file)"
+                    accept=".jpg, .jpeg, .png, .gif, .mp4, .avi, .mpeg, .bmp"
                     placeholder="Choisissez votre fichier à télécharger"
                     drop-placeholder="Choisir le fichier à importer"
                 ></b-form-file>

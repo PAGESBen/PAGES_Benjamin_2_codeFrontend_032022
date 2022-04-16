@@ -2,10 +2,13 @@
     <div>
         <b-row class="mb-3 py-5 icon-background">
             <b-col cols='6' class="d-flex flex-column justify-content-center align-items-center">
+
+                <!--Affichage de l'image-->
                 <div class="profil-img-container d-flex justify-content-center">
                     <b-img :src="profile.imageURL" thumbnail class="profile-img" alt="Profile Image"></b-img>        
                 </div>
                 
+                <!--Formulaire changement d'image de profil-->
                 <div v-if="modify && form.file == null" class="change-profile-img">
                     <label for="change-profile-img-input">
                         <b-icon icon="upload" variant="dark" font-scale="1"></b-icon>
@@ -22,7 +25,8 @@
                 <b-button block v-if="owner && !modify" variant="outline-primary" class="m-2 button-width" @click="modifyForm()">Modifier</b-button>
 
                 <!-- Bouton supprimer réservé aux administrateurs ou au propriétaire -->
-                <b-button block v-if="owner || this.$store.state.user.admin" variant="danger" class="m-2 button-width" @click="$bvModal.show('cancelConfirmation')">Supprimer</b-button>
+                <b-button block v-if="!modify && (owner || this.$store.state.user.admin)" variant="danger" class="m-2 button-width" @click="$bvModal.show('cancelConfirmation')">Supprimer</b-button>
+                <!--Modale de sécurité pour la suppression de compte-->
                 <b-modal id="cancelConfirmation" hide-footer>
                     <template #modal-title>
                         ATTENTION
@@ -75,6 +79,7 @@
 
         </b-row>
 
+        <!--Formulaire de modification du profil-->
         <b-row v-if="modify" class="pt-3 border-bottom w-100 m-0 p-0">
 
             <b-form class="w-100">

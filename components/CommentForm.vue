@@ -23,6 +23,7 @@
 
                 <b-form-file
                     v-model="form.file"
+                    accept=".jpg, .jpeg, .png, .gif, .mp4, .avi, .mpeg, .bmp"
                     placeholder="Ajouter une image, un gif ou une vidéo"
                     drop-placeholder="Choisir le fichier à importer"
                     ></b-form-file>

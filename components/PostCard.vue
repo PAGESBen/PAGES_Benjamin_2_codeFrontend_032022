@@ -61,7 +61,7 @@
                                     align="center"
                                     :src="post.mediaURL" 
                                     img-alt="post illustration"
-                                    img-top 
+                                    img-top
                                 />
 
                                 <b-button size="sm" variant="danger" class="position-absolute close-button" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> x </b-button>

@@ -7,5 +7,6 @@
 <style>
 .logo {
   max-height: 30px;
+  min-width: 200px;
 }
 </style>
