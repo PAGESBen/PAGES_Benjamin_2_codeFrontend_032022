@@ -1,17 +1,18 @@
-
-// let user = localStorage.getItem('user');
-// if (!user) {
-//   user = {
-//     userId : -1,
-//     token : '', 
-//     admin : false
-//   }
-// }
+if(process.client) {
+  let user = localStorage.getItem('user');
+  if (!user) {
+    user = {
+      userId : -2,
+      token : '', 
+      admin : false
+    }
+  }
+}
 
 export const state = () => ({
     status : '',
-    user :{ // remplacer par le user du local storage
-      userId : -1,
+    user :{
+      userId : -2,
       token : '', 
       admin : false
     }, 
@@ -30,15 +31,24 @@ export const mutations = {
 
   LOG_USER: function(state, user) {
     this.$axios.setHeader('Authorization', 'Bearer ' + user.token) 
-    // localStorage.setItem('user', user) // il vaut mieux stocker dans un HTTPOnly coockie
     state.user = user
+    if(process.client) {
+      localStorage.setItem('user', JSON.stringify(state.user))
+    }
   }, 
+  
+  STORE_USER : function (state, user) {
+    state.user = user
+  },
 
   LOGOUT_USER : function (state) {
     state.user = {
       userId : -1, 
       token : '', 
       admin : false
+    }
+    if(process.client) {
+      localStorage.removeItem('user')
     }
     this.$router.push('/')
   }, 

@@ -80,7 +80,7 @@
                             <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
                         </div> 
                 </b-card-body>
-            <b-card-footer footer-bg-variant="white">
+            <b-card-footer footer-bg-variant="white" class="border-0 pt-3">
                 <b-row >
                     <b-col cols="2">
                         <b-icon class="hover-animation" :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" variant="secondary" font-scale="1.5" @click="updateLike"></b-icon>

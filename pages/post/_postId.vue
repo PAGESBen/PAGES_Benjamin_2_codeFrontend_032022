@@ -82,6 +82,7 @@ export default {
         try {
             this.post = await this.$axios.$get('/post/' + this.$route.params.postId)
             let res = await this.$axios.get('/post/' + this.$route.params.postId + '/comment/1/10')
+            console.log(this.post)
             this.comments = res.data.comments
             this.commentsCount = res.data.commentsCount
         } catch (e) {

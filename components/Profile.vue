@@ -37,7 +37,7 @@
                                 <b-spinner small></b-spinner>
                             </span>
                         </b-button>
-                        <b-button block class="mt-3" @click="$bvModal.hide('cancelConfirmation')">Annuler</b-button>
+                        <b-button block class="mt-3" variant="dark" @click="$bvModal.hide('cancelConfirmation')">Annuler</b-button>
                     </div>
                 </b-modal>
             </b-col>

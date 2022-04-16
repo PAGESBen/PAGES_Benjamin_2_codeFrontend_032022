@@ -1,6 +1,9 @@
 <template>
     <b-row>
-
+        <b-col cols="12">
+            <h1 class="my-3">Ajouter Un post</h1>
+            <h2 class="mb-5 h5">Ecrivez votre message ci-dessous</h2>
+        </b-col>
         <!--En cas de message vide ou d'erreur-->
         <b-col cols="12">
             <b-alert :show="alert.show" dismissible :variant="alert.variant" class="w-100">

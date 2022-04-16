@@ -11,8 +11,8 @@
             <b-col cols="10">
                 <div class="d-flex w-100 flex-column mb-2">
                     <nuxt-link :to="'/profile/' + comment.userId">
-                        <b-img fluid :src="comment.userImg" class='profilImage border-1 border-primary' thumbnail alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
-                        <span>{{comment.firstname}} {{comment.lastname}}</span>
+                        <b-img fluid :src="comment.userImg" class='profilImage border-1 border-secondary' thumbnail alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
+                        <span class="text-secondary">{{comment.firstname}} {{comment.lastname}}</span>
                     </nuxt-link>
                     <small class="m-1">Posté le {{commentDate(comment)}}</small>
                 </div>

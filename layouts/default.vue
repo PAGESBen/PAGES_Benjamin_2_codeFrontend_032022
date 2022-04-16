@@ -2,8 +2,15 @@
     <div>
         <b-container fluid class="min-viewport-height m-0 p-0">
 
-            <!-- =======si non loged======= -->
-            <b-row v-if="user.userId  == '-1'" class="min-viewport-height m-auto" align-content="center" align-h="center">
+            <!-- ======= Vérification du localStorage ======= -->
+            <b-row v-if="user.userId  == '-2'" class="min-viewport-height m-auto" align-content="center" align-h="center">
+                <b-col class="text-center">
+                    <Loader />
+                </b-col>
+            </b-row>
+
+            <!-- ======= si non loged ======= -->
+            <b-row v-else-if="user.userId  == '-1'" class="min-viewport-height m-auto" align-content="center" align-h="center">
                 <b-col lg="4" class="d-flex justify-content-center align-items-center">
                     <IconAbove />
                 </b-col>
@@ -60,8 +67,27 @@ export default {
             dev : "test"
         }
     }, 
+    
     computed : {
         ...mapState(['user'])
+    },
+
+    mounted() {
+        console.log(this.user)
+        if(process.client) {
+            let stored = localStorage.getItem('user')
+            if(stored) {
+                this.$store.commit('STORE_USER', JSON.parse(stored))
+                this.$axios.setHeader('Authorization', 'Bearer ' + this.user.token) 
+            } else {
+                let user = {
+                    userId : -1, 
+                    token : '', 
+                    admin : false
+                }
+                this.$store.commit('STORE_USER', user)
+            }
+        }
     }
 }
 

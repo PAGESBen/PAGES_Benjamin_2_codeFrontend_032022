@@ -1,4 +1,5 @@
 export default {
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'groupomania-frontend',
@@ -17,7 +18,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [ //!jeremy scss ici?!?
+  css: [
     '~assets/scss/custom.scss'
   ],
 
@@ -39,21 +40,14 @@ export default {
     hoistUseStatements: true
   },
 
-  module: {
-    rules: [
-      {
-          test: /\.s[ac]ss$/i,
-          use: ['style-loader','css-loader','sass-loader'],
-      },   
-    ],
-  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
+  
   bootstrapVue: {
     icons: true,
     bootstrapCSS: false, 
