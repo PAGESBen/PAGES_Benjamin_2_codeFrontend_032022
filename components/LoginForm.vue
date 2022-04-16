@@ -1,8 +1,8 @@
 <template>
     <div>
         <b-row no-gutters class="m-auto">
-            <h2 v-if="mode == 'login'">Se connecter</h2>
-            <h2 v-if="mode == 'register'">Créer un compte</h2>
+            <h1 v-if="mode == 'login'">Se connecter</h1>
+            <h1 v-if="mode == 'register'">Créer un compte</h1>
         </b-row>
 
         <b-row  class="m-auto">
@@ -11,7 +11,6 @@
                     <b-col md="6" v-if="mode == 'register'">
 
                         <b-form-group
-                        id="firstname"
                         label="Prénom"
                         label-for="firstname"
                         >
@@ -30,7 +29,6 @@
                     <b-col md='6' v-if="mode == 'register'">
                     
                         <b-form-group
-                        id="lastname"
                         label="Nom"
                         label-for="lastname"
                         >
@@ -49,7 +47,6 @@
                     <b-col cols="12" v-if="mode == 'register'">
 
                         <b-form-group
-                        id="position"
                         label="Poste"
                         label-for="position"
                         >
@@ -70,7 +67,6 @@
                         label-for="email"
                         >
                             <b-form-input
-                            id="email"
                             v-model="form.email"
                             type="email"
                             placeholder="jzunino@groupomania.com"
@@ -80,7 +76,6 @@
                         </b-form-group>
 
                         <b-form-group
-                        id="password"
                         label="Mot de passe"
                         label-for="password"
                         >

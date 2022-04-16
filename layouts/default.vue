@@ -10,16 +10,17 @@
             </b-row>
 
             <!-- ======= si non loged ======= -->
-            <b-row v-else-if="user.userId  == '-1'" class="min-viewport-height m-auto" align-content="center" align-h="center">
-                <b-col lg="4" class="d-flex justify-content-center align-items-center">
-                    <IconAbove />
-                </b-col>
+            <main v-else-if="user.userId  == '-1'">
+                <b-row class="min-viewport-height m-auto" align-content="center" align-h="center">
+                    <b-col lg="4" class="d-flex justify-content-center align-items-center">
+                        <IconAbove />
+                    </b-col>
 
-                <b-col lg="4" sm="8" class="d-flex justify-content-center align-items-center">
-                    <LoginForm/>
-                </b-col>
-            </b-row>
-            
+                    <b-col lg="4" sm="8" class="d-flex justify-content-center align-items-center">
+                        <LoginForm/>
+                    </b-col>
+                </b-row>
+            </main>
             <!-- ========Si loged========= -->
             <div v-else>  
                 <header>
