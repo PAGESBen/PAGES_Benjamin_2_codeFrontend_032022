@@ -83,7 +83,18 @@
             <b-card-footer footer-bg-variant="white" class="border-0 pt-3">
                 <b-row >
                     <b-col cols="2">
-                        <b-icon class="hover-animation" :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" variant="secondary" font-scale="1.5" @click="updateLike"></b-icon>
+                        <b-icon 
+                            tabindex="0" 
+                            class="hover-animation" 
+                            role="checkbox" 
+                            :aria-checked="post.mylikes == 1 ? true : false" 
+                            :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" 
+                            variant="secondary" 
+                            font-scale="1.5" 
+                            @click="updateLike" 
+                            @keyup.space="updateLike" 
+                            @keyup.enter="updateLike"
+                        ></b-icon>
                     </b-col>
                     <b-col cols="10" class="text-right">
                         <nuxt-link v-if="feed" :to="'/post/' + post.id">

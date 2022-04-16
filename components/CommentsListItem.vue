@@ -73,7 +73,18 @@
         </div>
 
         <div>
-            <b-icon class="hover-animation pl-1" :icon="comment.mylikes ? 'heart-fill' : 'heart'" variant="secondary" font-scale="1.5" @click="updateLike"></b-icon>
+            <b-icon 
+                tabindex="0"
+                class="hover-animation pl-1"
+                role="checkbox"
+                :aria-checked="comment.mylikes == 1 ? true : false"
+                :icon="comment.mylikes ? 'heart-fill' : 'heart'" 
+                variant="secondary" 
+                font-scale="1.5" 
+                @click="updateLike"
+                @keyup.space="updateLike"
+                @keyup.enter="updateLike"
+            ></b-icon>
         </div>
 
     </b-list-group-item>
