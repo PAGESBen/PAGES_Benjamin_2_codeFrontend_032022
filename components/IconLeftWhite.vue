@@ -6,6 +6,6 @@
 
 <style>
 .logo {
-  min-height: 30px;
+  max-height: 30px;
 }
 </style>

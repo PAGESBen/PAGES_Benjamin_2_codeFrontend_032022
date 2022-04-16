@@ -94,7 +94,7 @@
                             @click="updateLike" 
                             @keyup.space="updateLike" 
                             @keyup.enter="updateLike"
-                        ></b-icon>
+                                ></b-icon>
                     </b-col>
                     <b-col cols="10" class="text-right">
                         <nuxt-link v-if="feed" :to="'/post/' + post.id">
