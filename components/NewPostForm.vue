@@ -14,7 +14,6 @@
         <b-col>
             <b-form id="postForm" @submit.prevent="onSubmit">
                 <b-form-group
-                id="post"
                 label="Message"
                 label-for="post"
                 >

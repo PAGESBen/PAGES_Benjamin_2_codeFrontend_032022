@@ -1,5 +1,5 @@
 <template>
-    <b-spinner class="loader" label="Loading..." variant="secondary"></b-spinner>
+    <b-spinner class="loader" label="En attente de chargement..." variant="secondary"></b-spinner>
 </template>
 
 <style scoped>

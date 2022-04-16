@@ -1,5 +1,11 @@
 <template>
     <div>
+
+        <b-row>
+            <b-col>
+                <h1 class="h3 text-center">Détail du profil</h1>
+            </b-col>
+        </b-row>
         <b-row class="mb-3 py-5 icon-background">
             <b-col cols='6' class="d-flex flex-column justify-content-center align-items-center">
 
@@ -12,25 +18,25 @@
                 <div v-if="modify && form.file == null" class="change-profile-img">
                     <label for="change-profile-img-input">
                         <b-icon icon="upload" variant="dark" font-scale="1"></b-icon>
-                        <span class="dark small hover-underline">Changer d'image</span>
+                        <span class="small hover-underline">Changer d'image</span>
                     </label>
                     <b-form-file plain accept=".jpg, .jpeg, .png" id="change-profile-img-input" v-model="form.file"></b-form-file>
                 </div>
-                <span class="small text-danger hover-underline" v-if="modify && form.file != null" @click="form.file = null">
-                    <b-icon icon="x-circle" variant="danger" font-scale="1"></b-icon>
+                <span class="small text-danger hover-underline bg-light" v-if="modify && form.file != null" @click="form.file = null">
+                    <b-icon icon="x-circle" class="text-dark" variant="danger" font-scale="1"></b-icon>
                     Annuler changement
                 </span>
 
                 <!-- bouton modifier réservé au propriétaire de la fiche -->
-                <b-button block v-if="owner && !modify" variant="outline-primary" class="m-2 button-width" @click="modifyForm()">Modifier</b-button>
+                <b-button block v-if="owner && !modify" variant="primary" class="m-2 button-width" @click="modifyForm()">Modifier</b-button>
 
                 <!-- Bouton supprimer réservé aux administrateurs ou au propriétaire -->
                 <b-button block v-if="!modify && (owner || this.$store.state.user.admin)" variant="danger" class="m-2 button-width" @click="$bvModal.show('cancelConfirmation')">Supprimer</b-button>
                 <!--Modale de sécurité pour la suppression de compte-->
-                <b-modal id="cancelConfirmation" hide-footer>
-                    <template #modal-title>
-                        ATTENTION
-                    </template>
+                <b-modal  aria-label="Avertissement" hide-header id="cancelConfirmation" hide-footer>
+                    <div class="modal-header mb-3">
+                        <h2 class="h4 m-1"> ATTENTION </h2>
+                    </div>
                     <div class="d-block text-center text-danger">
                         Attention cette action supprimera DEFINITIVEMENT votre profil utilisateur ainsi que l'ensemble de ses posts et commentaires.
                     </div>

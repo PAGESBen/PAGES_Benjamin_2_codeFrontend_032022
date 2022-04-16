@@ -12,14 +12,14 @@
                 <div class="d-flex w-100 flex-column mb-2">
                     <nuxt-link :to="'/profile/' + comment.userId">
                         <b-img fluid :src="comment.userImg" class='profilImage border-1 border-secondary' thumbnail alt="'Image profile de ' + post.firstname + ' ' + post.lastname "></b-img>
-                        <span class="text-secondary">{{comment.firstname}} {{comment.lastname}}</span>
+                        <span class="text-primary">{{comment.firstname}} {{comment.lastname}}</span>
                     </nuxt-link>
                     <small class="m-1">Posté le {{commentDate(comment)}}</small>
                 </div>
             </b-col>
 
             <b-col cols="2" v-if="comment.userId == user.userId || user.admin" align-self="end" class="d-flex justify-content-end">
-                <b-dropdown size="sm" right id="postNav" variant="outline-primary" class="m-2">
+                <b-dropdown size="sm" text="options" right :id="'commentNav' + comment.id" variant="outline-primary" class="m-2">
                     <b-dropdown-item v-if="comment.userId == user.userId" @click="modifyForm"> Modifier</b-dropdown-item>
                     <b-dropdown-item v-if="comment.userId == user.userId || user.admin" @click="deleteComment"> Supprimer</b-dropdown-item>
                 </b-dropdown>
@@ -50,7 +50,7 @@
                     v-if="comment.mediaType == 'image' || comment.mediaType == 'gif' "
                     align="center"
                     :src="comment.mediaURL" 
-                    img-alt="comment illustration"
+                    :alt="'illustration du commentaire de ' + comment.firstname + ' ' + comment.lastname"
                     img-top 
                 />
 

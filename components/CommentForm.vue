@@ -10,7 +10,6 @@
         <b-col>
             <b-form id="commentForm" @submit.prevent="onSubmit">
                 <b-form-group
-                id="comment"
                 label="Ecrivez votre commentaire"
                 label-for="comment"
                 >

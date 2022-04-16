@@ -1,5 +1,10 @@
 <template>
     <div>
+        <b-row>
+            <b-col>
+                <h1 class="h3">Post et Commentaires</h1>
+            </b-col>
+        </b-row>
         <b-row class="my-3">
             <b-col>
                 <PostCard
@@ -33,7 +38,7 @@
             <b-col cols="11">
 
                 <div v-if="commentsCount != 0">
-                    <h3 class="h6">Commentaires</h3>
+                    <h2 class="h6">Commentaires</h2>
 
                     <b-list-group flush>
                         <CommentsListItem
@@ -45,7 +50,7 @@
                     </b-list-group>
 
                     <div v-if="commentsCount != commentsLoaded" class="w-100 d-flex justify-content-end m-2">
-                        <b-button size="sm" @click="nextPage()">Afficher plus de commentaires</b-button>
+                        <b-button variant="primary" size="sm" @click="nextPage()">Afficher plus de commentaires</b-button>
                     </div>
                 </div>
 

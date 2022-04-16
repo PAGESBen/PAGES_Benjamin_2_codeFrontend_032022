@@ -1,5 +1,5 @@
 <template>
-    <b-nav vertical pills class="text-center my-5">
+    <b-nav vertical pills class="text-center my-5" id="navigation">
         <b-nav-item to='/'>
             Accueil
         </b-nav-item>

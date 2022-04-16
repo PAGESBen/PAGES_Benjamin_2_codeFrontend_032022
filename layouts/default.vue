@@ -22,23 +22,30 @@
             
             <!-- ========Si loged========= -->
             <div v-else>  
-                <b-container class="bg-primary" fluid>
-                    <b-container fluid='lg'>
-                        <b-row>
-                            <HeaderNav/>
-                        </b-row>
+                <header>
+                    <b-container class="bg-primary" fluid>
+                        <b-container fluid='lg'>
+                            <b-row>
+                                <HeaderNav/>
+                            </b-row>
+                        </b-container>
                     </b-container>
-                </b-container>
+                </header>
 
-                <b-container>
-                    <b-row>
-                        <b-col md='3'>
-                            <Nav/>
-                        </b-col>
-                        <b-col md='9'>
-                            <Nuxt />
-                        </b-col>
-                    </b-row>
+                <b-container fluid='lg'>
+                        <b-row>
+                            <b-col md='3'>
+                                <nav aria-labelledby="navigation">
+                                    <Nav/>
+                                </nav>
+                            </b-col>
+                            <b-col md='9'>
+                                <main>
+                                    <Nuxt />
+                                </main>
+                            </b-col>
+                        </b-row>
+                    
                 </b-container>
             </div>
 
