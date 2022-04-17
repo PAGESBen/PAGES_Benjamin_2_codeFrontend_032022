@@ -74,7 +74,16 @@ export default {
         return  {
             dev : "test"
         }
-    }, 
+    },
+
+    head() {
+        return {
+            title : 'Groupomania Social Hub',
+            htmlAttrs : {
+                lang: 'fr'
+            }
+        }
+    },
     
     computed : {
         ...mapState(['user'])
