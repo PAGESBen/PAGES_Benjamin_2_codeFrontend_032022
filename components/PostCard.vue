@@ -66,8 +66,8 @@
                                         v-if="post.mediaType == 'image' || post.mediaType == 'gif'"
                                         align="center"
                                         :src="post.mediaURL" 
-                                        :alt="'Image liée au post de ' + post.firstname + ' ' + post.lastname"
-                                        :title="'Image liée au post de ' + post.firstname + ' ' + post.lastname"
+                                        :alt="'Image liée au post de ' + post.firstname + ' ' + post.lastname + ' du ' + postDate"
+                                        :title="'Image liée au post de ' + post.firstname + ' ' + post.lastname + ' du ' + postDate"
                                         img-top
                                     />
                                     <div class="position-absolute close-button">

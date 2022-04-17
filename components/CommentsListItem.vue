@@ -45,12 +45,12 @@
                     allowfullscreen
                 ></b-embed>
 
-                <!-- Comment gerer la partie alt -->
                 <b-card-img
                     v-if="comment.mediaType == 'image' || comment.mediaType == 'gif' "
                     align="center"
                     :src="comment.mediaURL" 
-                    :alt="'illustration du commentaire de ' + comment.firstname + ' ' + comment.lastname"
+                    :alt="'illustration du commentaire de ' + comment.firstname + ' ' + comment.lastname + ' du ' + commentDate(comment)"
+                    :title="'illustration du commentaire de ' + comment.firstname + ' ' + comment.lastname + ' du ' + commentDate(comment)"
                     img-top 
                 />
 
