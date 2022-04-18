@@ -1,10 +1,12 @@
 <template>
     <div>
+
         <b-row>
             <b-col>
                 <h1 class="h3">Post et Commentaires</h1>
             </b-col>
         </b-row>
+
         <b-row class="my-3">
             <b-col>
                 <PostCard
@@ -35,8 +37,8 @@
 
         <b-row class="mt-3 ml-2">
             <b-col cols="1" class="border-right"></b-col>
-            <b-col cols="11">
 
+            <b-col cols="11">
                 <div v-if="commentsCount != 0">
                     <h2 class="h6">Commentaires</h2>
 
@@ -57,18 +59,15 @@
                 <div v-else class="text-center">
                     <span class="h6">Aucun commentaire</span>
                 </div>
-
             </b-col>
         </b-row>
 
-            
     </div>
 </template>
 
 <script>
-
 export default {
-        name : 'postPage', 
+    name : 'postPage', 
 
     data : function () {
         return {
@@ -137,9 +136,6 @@ export default {
                 console.log(e)
             }
         }
-
     }
-
 }
-
 </script>

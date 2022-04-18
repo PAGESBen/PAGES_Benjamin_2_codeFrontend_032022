@@ -1,5 +1,16 @@
 # groupomania-frontend
 
+------------------------------------------------------------------------------------------
+## Examinateur
+Node version v16.13.1
+
+### install dependencies
+$ npm install
+
+# serve with hot reload at localhost:3000
+$ npm run dev
+
+------------------------------------------------------------------------------------------
 ## Build Setup
 
 ```bash

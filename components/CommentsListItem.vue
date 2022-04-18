@@ -7,6 +7,7 @@
                 </b-alert>
             </b-col>
         </b-row>
+
         <b-row>
             <b-col cols="10">
                 <div class="d-flex w-100 flex-column mb-2">
@@ -25,6 +26,7 @@
                 </b-dropdown>
             </b-col>
         </b-row>
+
         <div class="mb-3">
             <p v-if="!modify">{{comment.messageText}}</p>
 
@@ -95,6 +97,7 @@ import {mapState} from 'vuex'
 
 export default {
     name : 'commentsListItem',
+
     data : function () {
         return {
             like : 0,
@@ -193,22 +196,23 @@ export default {
 
 <style>
 
-    .profilImage{
-        height: 30px;
-        width: 30px
-    }
+.profilImage{
+    height: 30px;
+    width: 30px
+}
 
-    .hover-animation:hover {
-        -webkit-transform: scale(1.2);
-        -moz-transform: scale(1.2);
-        -o-transform: scale(1.2);
-        -ms-transform: scale(1.2);
-        transform: scale(1.2);
-        cursor: pointer
-    }
+.hover-animation:hover {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    cursor: pointer
+}
 
-    .close-button {
-        top:10px;
-        right: 10px;
-    }
+.close-button {
+    top:10px;
+    right: 10px;
+}
+
 </style>

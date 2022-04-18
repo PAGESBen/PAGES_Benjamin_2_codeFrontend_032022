@@ -34,19 +34,18 @@
                 </header>
 
                 <b-container fluid='lg'>
-                        <b-row>
-                            <b-col md='3'>
-                                <nav aria-labelledby="navigation">
-                                    <Nav/>
-                                </nav>
-                            </b-col>
-                            <b-col md='9'>
-                                <main>
-                                    <Nuxt />
-                                </main>
-                            </b-col>
-                        </b-row>
-                    
+                    <b-row>
+                        <b-col md='3'>
+                            <nav aria-labelledby="navigation">
+                                <Nav/>
+                            </nav>
+                        </b-col>
+                        <b-col md='9'>
+                            <main>
+                                <Nuxt />
+                            </main>
+                        </b-col>
+                    </b-row>
                 </b-container>
             </div>
 
@@ -55,27 +54,15 @@
 </template>
 
 <style>
-
 .min-viewport-height {
   min-height: 100vh;
-}
-
-.teste {
- height: 300px;   
 }
 </style>
 
 <script>
-
 import {mapState} from 'vuex'
 
 export default {
-    data : function () {
-        return  {
-            dev : "test"
-        }
-    },
-
     head() {
         return {
             title : 'Groupomania Social Hub',
@@ -90,7 +77,6 @@ export default {
     },
 
     mounted() {
-        console.log(this.user)
         if(process.client) {
             let stored = localStorage.getItem('user')
             if(stored) {
@@ -107,7 +93,6 @@ export default {
         }
     }
 }
-
 </script>
 
 

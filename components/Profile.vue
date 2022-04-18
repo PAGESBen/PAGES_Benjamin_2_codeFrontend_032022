@@ -6,6 +6,7 @@
                 <h1 class="h3 text-center">Détail du profil</h1>
             </b-col>
         </b-row>
+
         <b-row class="mb-3 py-5 icon-background">
             <b-col cols='6' class="d-flex flex-column justify-content-center align-items-center">
 
@@ -54,7 +55,6 @@
         </b-row>
 
         <b-row v-if="!modify" class="py-3 border-bottom">
-
             <b-alert :show="alert.show" dismissible :variant="alert.variant" class="w-100">
                 {{alert.message}}
             </b-alert>
@@ -82,7 +82,6 @@
                 </b-list-group-item>
 
             </b-list-group>
-
         </b-row>
 
         <!--Formulaire de modification du profil-->
@@ -95,9 +94,9 @@
                     </b-col>
                     <b-col>
                         <b-form-input
-                        id="firstname"
-                        class="mb-1 mr-sm-1 mb-sm-0"
-                        v-model="form.user.firstname"
+                            id="firstname"
+                            class="mb-1 mr-sm-1 mb-sm-0"
+                            v-model="form.user.firstname"
                         ></b-form-input>
                     </b-col>
                 </b-row>
@@ -108,9 +107,9 @@
                     </b-col>
                     <b-col>
                         <b-form-input
-                        id="lastname"
-                        class="mb-1 mr-sm-1 mb-sm-0"
-                        v-model="form.user.lastname"
+                            id="lastname"
+                            class="mb-1 mr-sm-1 mb-sm-0"
+                            v-model="form.user.lastname"
                         ></b-form-input>
                     </b-col>
                 </b-row>
@@ -121,9 +120,9 @@
                     </b-col>
                     <b-col>
                         <b-form-input
-                        id="position"
-                        class="mb-1 mr-sm-1 mb-sm-0"
-                        v-model="form.user.position"
+                            id="position"
+                            class="mb-1 mr-sm-1 mb-sm-0"
+                            v-model="form.user.position"
                         ></b-form-input>
                     </b-col>
                 </b-row>
@@ -134,9 +133,9 @@
                     </b-col>
                     <b-col>
                         <b-form-input
-                        id="mail"
-                        class="mb-1 mr-sm-1 mb-sm-0"
-                        v-model="form.user.email"
+                            id="mail"
+                            class="mb-1 mr-sm-1 mb-sm-0"
+                            v-model="form.user.email"
                         ></b-form-input>
                     </b-col>
                 </b-row>
@@ -162,10 +161,9 @@
 </template>
 
 <script>
-
-
 export default {
     name: 'profile',
+
     data : function () {
         return {
             profile : {
@@ -198,20 +196,15 @@ export default {
     },
 
     async mounted() {
-        
         try{
             const userId = this.$route.params.userId == undefined ? this.$store.state.user.userId : this.$route.params.userId
             this.profile = await this.$axios.$get('/user/' + userId)
             if(this.profile.id === this.$store.state.user.userId) {
                 this.owner = true
             }
-
         } catch (err) {
-
             console.log(err)
-
         }
-
     },
 
     methods : {
@@ -226,34 +219,34 @@ export default {
         },
         
         modifyUserProfile : async function() {
-             try {
-                    this.loading = true 
-                    //données qui vont etre envoyées si il y a un fichier:
-                    const data = new FormData()
-                    data.append('file', this.form.file)
-                    data.append('user', JSON.stringify(this.form.user))
-                    
-                    const user = !this.form.file ? this.form.user : data
-                    console.log(user)
+            try {
+                this.loading = true 
+                //données qui vont etre envoyées si il y a un fichier:
+                const data = new FormData()
+                data.append('file', this.form.file)
+                data.append('user', JSON.stringify(this.form.user))
+                
+                const user = !this.form.file ? this.form.user : data
+                console.log(user)
 
-                    const res = await this.$axios.put('/user/' + this.profile.id, user)
+                const res = await this.$axios.put('/user/' + this.profile.id, user)
 
-                    this.form.file = null
-                    
-                    this.profile = res.data
-                    this.loading = false
-                    this.modify = false
-                    this.alert.show = true
-                    this.alert.message = "Profil mis à jour avec succès"
-                    console.log('==========Profil mis à jour==========')
-                } catch (e) {
-                    console.log(e)
-                    this.loading = false
-                    this.modify = false
-                    this.alert.show = true
-                    this.alert.message = "Une erreur s'est produite veuillez rééssayer ulterieurement"
-                    this.alert.variant = 'danger'
-                }
+                this.form.file = null
+                
+                this.profile = res.data
+                this.loading = false
+                this.modify = false
+                this.alert.show = true
+                this.alert.message = "Profil mis à jour avec succès"
+                console.log('==========Profil mis à jour==========')
+            } catch (e) {
+                console.log(e)
+                this.loading = false
+                this.modify = false
+                this.alert.show = true
+                this.alert.message = "Une erreur s'est produite veuillez rééssayer ulterieurement"
+                this.alert.variant = 'danger'
+            }
         },
 
         cancelUpdate : function () {
@@ -289,42 +282,41 @@ export default {
 </script>
 
 <style scoped>
-    .icon-background {
-        background-image: url(../assets/background.svg);
-        background-repeat: no-repeat;
-        background-size: 500px;
-        background-position: bottom left;
-    }
+.icon-background {
+    background-image: url(../assets/background.svg);
+    background-repeat: no-repeat;
+    background-size: 500px;
+    background-position: bottom left;
+}
 
-    .profil-img-container {
-        width: 150px;
-        height: 150px;
-        border-radius: 100%;
-    }
+.profil-img-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+}
 
-    .profile-img {
-        object-fit: cover;
-        object-position: center;
-        width: 100%;
-        min-height: 100%;
-    }
+.profile-img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    min-height: 100%;
+}
 
-    .change-profile-img>input {
-        display: none;
-        cursor: pointer;
-    }
-
-    .change-profile-img>#change-profile-img-input {
+.change-profile-img>input {
+    display: none;
     cursor: pointer;
-    }
+}
 
-    .hover-underline:hover {
-        text-decoration-line: underline;
-        cursor: pointer
-    }
+.change-profile-img>#change-profile-img-input {
+cursor: pointer;
+}
 
-    .button-width {
-        max-width: 150px;
-    }
+.hover-underline:hover {
+    text-decoration-line: underline;
+    cursor: pointer
+}
 
+.button-width {
+    max-width: 150px;
+}
 </style>

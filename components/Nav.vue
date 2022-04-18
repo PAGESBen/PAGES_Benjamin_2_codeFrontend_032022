@@ -13,18 +13,14 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-
 export default {
-    name: 'navMenu',
-    
+    name: 'navMenu'
 }
 </script>
 
 <style lang="scss" scoped>
-    // @import '../assets/scss/variables.scss';
-    .nuxt-link-exact-active {
-        background : $primary;
-        color : white
-    }
+.nuxt-link-exact-active {
+    background : $primary;
+    color : white
+}
 </style>

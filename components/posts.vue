@@ -3,8 +3,11 @@
 
         <h1 class="my-3">Fil d'actualités</h1>
 
-        <PostCard v-for="post in posts.posts" :key="post.id"
-            :post="post" feed />
+        <PostCard 
+            v-for="post in posts.posts" 
+            :key="post.id"
+            :post="post" feed 
+        />
 
         <!--pagination -->
         <b-row class="my-5">
@@ -32,7 +35,6 @@ export default {
     computed : {
         postsLoaded () {return this.posts.posts.length}
     },
-
 
     async mounted() {
         try {

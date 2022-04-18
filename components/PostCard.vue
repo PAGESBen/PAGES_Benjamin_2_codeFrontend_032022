@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <!--Alerte liée à la modification des posts-->
         <b-alert :show="alert.show" dismissible :variant="alert.variant" class="w-100">
             {{alert.message}}
@@ -34,60 +33,62 @@
                 </b-card-header>
 
 
-                    <b-card-body class="p-2 position-relative">
+                <b-card-body class="p-2 position-relative">
 
-                        <!-- <nuxt-link v-if="feed" :to="'/post/'+ post.id" class="position-absolute coverBody postActiveLink" aria-label="Lien vers la page du post"></nuxt-link> -->
+                    <!-- <nuxt-link v-if="feed" :to="'/post/'+ post.id" class="position-absolute coverBody postActiveLink" aria-label="Lien vers la page du post"></nuxt-link> -->
 
-                            <b-card-text v-if="!modify" class="text-primary bg-light">{{post.messageText}}</b-card-text>
+                    <b-card-text v-if="!modify" class="text-primary bg-light">{{post.messageText}}</b-card-text>
 
-                            <div v-else>
-                                <label for="postMessage">modifier ou ajouter un message</label>
-                                <b-form-textarea
-                                    id="postMessage"
-                                    v-model="form.post.messageText"
-                                    type="textarea"
-                                    class="my-2"
-                                    :placeholder="post.messageText == '' ? 'Ajouter un message' : ''"
-                                ></b-form-textarea>
+                    <div v-else>
+                        <label for="postMessage">modifier ou ajouter un message</label>
+                        <b-form-textarea
+                            id="postMessage"
+                            v-model="form.post.messageText"
+                            type="textarea"
+                            class="my-2"
+                            :placeholder="post.messageText == '' ? 'Ajouter un message' : ''"
+                        ></b-form-textarea>
+                    </div>
+
+                    <div v-if="!form.post.removeImg">
+                        <div class="position-relative">
+                            <b-embed 
+                                v-if="post.mediaType == 'video'"
+                                type="iframe"
+                                aspect="16by9"
+                                :src="post.mediaURL"
+                                allowfullscreen
+                                :title="'Vidéo liée au post de '  + post.firstname + ' ' + post.lastname"
+                            ></b-embed>
+
+                            <b-card-img
+                                v-if="post.mediaType == 'image' || post.mediaType == 'gif'"
+                                align="center"
+                                :src="post.mediaURL" 
+                                :alt="'Image liée au post de ' + post.firstname + ' ' + post.lastname + ' du ' + postDate"
+                                :title="'Image liée au post de ' + post.firstname + ' ' + post.lastname + ' du ' + postDate"
+                                img-top
+                            />
+                            <div class="position-absolute close-button">
+                                <b-button aria-label="Supprimer le media" size="sm" variant="danger" class=" m-1 text-light font-weight-bold" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> X </b-button>
                             </div>
+                        </div>
+                    </div>
 
-                            <div v-if="!form.post.removeImg">
-                                <div class="position-relative">
-                                    <b-embed 
-                                        v-if="post.mediaType == 'video'"
-                                        type="iframe"
-                                        aspect="16by9"
-                                        :src="post.mediaURL"
-                                        allowfullscreen
-                                        :title="'Vidéo liée au post de '  + post.firstname + ' ' + post.lastname"
-                                    ></b-embed>
+                    <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
+                        <b-form-file
+                            v-model="form.file"
+                            placeholder="Ajouter un image / gif / vidéo"
+                            drop-placeholder="Choisir le fichier à importer"
+                        ></b-form-file>
+                    </div>
 
-                                    <b-card-img
-                                        v-if="post.mediaType == 'image' || post.mediaType == 'gif'"
-                                        align="center"
-                                        :src="post.mediaURL" 
-                                        :alt="'Image liée au post de ' + post.firstname + ' ' + post.lastname + ' du ' + postDate"
-                                        :title="'Image liée au post de ' + post.firstname + ' ' + post.lastname + ' du ' + postDate"
-                                        img-top
-                                    />
-                                    <div class="position-absolute close-button">
-                                        <b-button aria-label="Supprimer le media" size="sm" variant="danger" class=" m-1 text-light font-weight-bold" v-if="modify && post.mediaType != null" @click="form.post.removeImg = true"> X </b-button>
-                                    </div>
-                                </div>
-                            </div>
-                        <div v-if="(modify && post.mediaType == null) || (modify && form.post.removeImg)">
-                                <b-form-file
-                                    v-model="form.file"
-                                    placeholder="Ajouter un image / gif / vidéo"
-                                    drop-placeholder="Choisir le fichier à importer"
-                                ></b-form-file>
-                            </div>
+                    <div v-if="modify" class="d-flex justify-content-end">
+                        <b-button size="sm" class="m-2 font-weight-bold text-primary" variant="success" @click="updatePost">Valider</b-button>
+                        <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
+                    </div> 
+                </b-card-body>
 
-                            <div v-if="modify" class="d-flex justify-content-end">
-                                <b-button size="sm" class="m-2 font-weight-bold text-primary" variant="success" @click="updatePost">Valider</b-button>
-                                <b-button size="sm" class="m-2" variant="danger" @click="cancelUpdate">Annuler</b-button>
-                            </div> 
-                    </b-card-body>
                 <b-card-footer footer-bg-variant="white" class="border-0 pt-3">
                     <b-row >
                         <b-col cols="2">
@@ -102,7 +103,7 @@
                                 @click="updateLike" 
                                 @keyup.space="updateLike" 
                                 @keyup.enter="updateLike"
-                                    ></b-icon>
+                            ></b-icon>
                         </b-col>
                         <b-col cols="10" class="text-right">
                             <nuxt-link v-if="feed" :to="'/post/' + post.id">
@@ -124,6 +125,7 @@ import {mapState} from 'vuex'
 
 export default {
     name: 'postCard',
+
     data: function () {
         return {
             like : 0,
@@ -186,6 +188,7 @@ export default {
 
         async updatePost() {
             try {
+                this.alert.show = false
                 const data = new FormData()
                 data.append('file', this.form.file)
                 data.append('post', JSON.stringify(this.form.post))
@@ -197,60 +200,63 @@ export default {
                 this.modify = false
                 this.$emit('refreh-post')
                 this.alert.show = true
+                this.alert.variant = 'success'
                 this.alert.message='Post mis à jour avec succès'
 
                 this.form.post.removeImg = false
 
             } catch (e) {
                 console.log(e)
+
+                this.alert.show = true
+                this.alert.variant = 'danger'
+                this.alert.message='Impossible de mettre à jour un post vide'
             }
         }
     }
-
 }
 </script>
 
 <style scoped>
-    .profilImage{
-        height: 30px;
-        width: 30px
-    }
+.profilImage{
+    height: 30px;
+    width: 30px
+}
 
-    .hover-animation:hover {
-        -webkit-transform: scale(1.2);
-        -moz-transform: scale(1.2);
-        -o-transform: scale(1.2);
-        -ms-transform: scale(1.2);
-        transform: scale(1.2);
-        cursor: pointer
-    }
+.hover-animation:hover {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    cursor: pointer
+}
 
-    .close-button {
-        top:10px;
-        right: 10px;
-        background: white;
-        border-radius: 2px;
-    }
+.close-button {
+    top:10px;
+    right: 10px;
+    background: white;
+    border-radius: 2px;
+}
 
-    .postActiveLink, .postDesableLink {
-        color : black;
-    }
+.postActiveLink, .postDesableLink {
+    color : black;
+}
 
-    .postActiveLink:hover, .postActiveLink:active  {
-        text-decoration: none;
-        color: black;
-    }
+.postActiveLink:hover, .postActiveLink:active  {
+    text-decoration: none;
+    color: black;
+}
 
-    .postActiveLink:active {
-        border : 1px grey solid;
-    }
+.postActiveLink:active {
+    border : 1px grey solid;
+}
 
-    .coverBody {
-        top : 0;
-        bottom : 0;
-        right : 0; 
-        left : 0;
-        z-index: 1
-    }
-
+.coverBody {
+    top : 0;
+    bottom : 0;
+    right : 0; 
+    left : 0;
+    z-index: 1
+}
 </style>
