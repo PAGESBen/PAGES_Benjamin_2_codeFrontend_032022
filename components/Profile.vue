@@ -220,6 +220,7 @@ export default {
         
         modifyUserProfile : async function() {
             try {
+                this.alert.show = false
                 this.loading = true 
                 //données qui vont etre envoyées si il y a un fichier:
                 const data = new FormData()

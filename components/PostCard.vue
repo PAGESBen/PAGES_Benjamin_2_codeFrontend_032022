@@ -165,11 +165,16 @@ export default {
 
         async updateLike () {
             try {
+                this.alert.show = false
+
                 this.like = this.post.mylikes == 0 ? this.like = 1 : this.like = 0
                 console.log(this.like)
                 await this.$axios.post('/post/' + this.post.id + '/like', {like : this.like})
                 this.post.mylikes = this.like
             } catch (e) {
+                this.alert.show = true
+                this.alert.variant = 'danger'
+                this.alert.message = 'Une erreur s\'est produite, veuillez réessayer ultérieurement'
                 console.log(e)
             }
         }, 
@@ -201,7 +206,7 @@ export default {
                 this.$emit('refreh-post')
                 this.alert.show = true
                 this.alert.variant = 'success'
-                this.alert.message='Post mis à jour avec succès'
+                this.alert.message = 'Post mis à jour avec succès'
 
                 this.form.post.removeImg = false
 
@@ -210,7 +215,7 @@ export default {
 
                 this.alert.show = true
                 this.alert.variant = 'danger'
-                this.alert.message='Impossible de mettre à jour un post vide'
+                this.alert.message = 'Impossible de mettre à jour un post vide'
             }
         }
     }
