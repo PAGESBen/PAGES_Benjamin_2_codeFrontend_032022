@@ -18,7 +18,7 @@
         <div v-if="!error">
             <b-row class="my-3">
                 <b-col>
-                    <b-skeleton-wrapper :loading="loading">
+                    <b-skeleton-wrapper :loading="loading" aria-label="loading">
                         <template #loading>
                             <b-card>
                                 <div class="d-flex my-3 align-items-center">
@@ -31,6 +31,7 @@
                             </b-card>
                         </template>
                         <PostCard
+                            :aria-busy="loading"
                             :post="post"
                             @delete-post="deletePost"
                             @refreh-post="refreshPost"
