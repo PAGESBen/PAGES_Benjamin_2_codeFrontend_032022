@@ -106,7 +106,7 @@
                             ></b-icon>
                         </b-col>
                         <b-col cols="10" class="text-right">
-                            <nuxt-link v-if="feed" :to="'/post/' + post.id">
+                            <nuxt-link v-if="feed" :to="'/post/' + post.id" :aria-label="'Détail du post du ' + postDate">
                                 <span>Voir le post et les commentaires </span>
                                 <b-badge v-if="post.comments != 0" variant="danger">{{post.comments}}</b-badge>
                             </nuxt-link>             
