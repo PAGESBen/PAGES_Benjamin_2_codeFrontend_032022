@@ -83,7 +83,6 @@ export default {
                 this.$router.push('/')
             
             } catch (e) {
-                console.log('test')
                 this.alert.show = true
                 this.alert.message = "Une erreur s'est produite ou le post est vide"
                 this.alert.variant = 'danger'

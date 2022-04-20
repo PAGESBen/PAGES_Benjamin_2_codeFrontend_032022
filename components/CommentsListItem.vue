@@ -136,7 +136,6 @@ export default {
                 this.alert.show = false
 
                 this.like = this.comment.mylikes == 0 ? this.like = 1 : this.like = 0
-                console.log('/post/comment/' + this.comment.id + '/like')
                 await this.$axios.post('/post/comment/' + this.comment.id + '/like', {like : this.like})
                 this.comment.mylikes = this.like
             } catch (e) {

@@ -18,7 +18,7 @@
                                 id="firstname"
                                 v-model="form.firstname"
                                 type="text"
-                                placeholder="Jeremy"
+                                placeholder="Paul"
                                 required
                             ></b-form-input>
                             <small class="text-danger pb-2" v-if="!validateFields.firstname && fieldAlert">Prenom non valide ! </small>
@@ -36,7 +36,7 @@
                                 id="lastname"
                                 v-model="form.lastname"
                                 type="text"
-                                placeholder="Zunino"
+                                placeholder="DURANT"
                                 required
                             ></b-form-input>
                             <small class="text-danger pb-2" v-if="!validateFields.lastname && fieldAlert">Nom non valide ! </small>
@@ -69,7 +69,7 @@
                             <b-form-input
                                 v-model="form.email"
                                 type="email"
-                                placeholder="jzunino@groupomania.com"
+                                placeholder="rh@groupomania.com"
                                 required
                             ></b-form-input>
                             <small class="text-danger pb-2" v-if="!validateFields.mail && fieldAlert">Adresse mail non valide ! </small> 

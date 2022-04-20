@@ -233,7 +233,6 @@ export default {
                 data.append('user', JSON.stringify(this.form.user))
                 
                 const user = !this.form.file ? this.form.user : data
-                console.log(user)
 
                 const res = await this.$axios.put('/user/' + this.profile.id, user)
 
@@ -269,8 +268,6 @@ export default {
                 this.alert.show = true
                 this.alert.message = "Ce profil a été supprimé"
                 this.alert.variant = 'warning'
-                console.log(this.profile.id)
-                console.log(this.$store.state.user.iserId)
                 if(this.profile.id === this.$store.state.user.userId) {
                     this.$store.commit('LOGOUT_USER')
                 }

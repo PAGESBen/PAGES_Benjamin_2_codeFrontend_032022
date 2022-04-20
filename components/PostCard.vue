@@ -169,7 +169,6 @@ export default {
                 this.alert.show = false
 
                 this.like = this.post.mylikes == 0 ? this.like = 1 : this.like = 0
-                console.log(this.like)
                 await this.$axios.post('/post/' + this.post.id + '/like', {like : this.like})
                 this.post.mylikes = this.like
             } catch (e) {

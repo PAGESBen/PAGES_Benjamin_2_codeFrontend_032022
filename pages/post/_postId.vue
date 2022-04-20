@@ -160,8 +160,7 @@ export default {
                 this.page = 1
                 let res = await this.$axios.get('/post/' + this.$route.params.postId + '/comment/1/10')
                 this.comments = res.data.comments
-                this.commentsCount = res.data.commentsCount
-                console.log(this.comments)           
+                this.commentsCount = res.data.commentsCount           
             } catch(e) {
                 console.log(e)
             }
@@ -170,7 +169,6 @@ export default {
         async refreshPost(payload) {
             try {
                 this.post = await this.$axios.$get('/post/' + this.$route.params.postId)
-                console.log(this.post)
             } catch(e) {
                 console.log(e)
             }
