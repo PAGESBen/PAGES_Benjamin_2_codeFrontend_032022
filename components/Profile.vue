@@ -3,11 +3,11 @@
 
         <b-row>
             <b-col>
-                <h1 class="h3 text-center">Détail du profil</h1>
+                <h1 class="h2 my-2">Détail du profil</h1>
             </b-col>
         </b-row>
 
-        <b-row class="mb-3 py-5 icon-background">
+        <b-row v-if="!error" class="mb-3 py-5 icon-background">
             <b-col cols='6' class="d-flex flex-column justify-content-center align-items-center">
 
                 <!--Affichage de l'image-->
@@ -59,7 +59,7 @@
                 {{alert.message}}
             </b-alert>
 
-            <b-list-group class="w-100">
+            <b-list-group v-if="!error" class="w-100">
 
                 <b-list-group-item class="d-flex justify-content-between align-items-center">
                     <span>Prénom :</span>
@@ -174,6 +174,7 @@ export default {
                 imageURL : '',
                 position : ''
             },
+            error : false,
             owner : false, 
             modify : false,
             loading : false, //sert pour le spiner lors de l'execution de modifyUserProfile
@@ -204,6 +205,10 @@ export default {
             }
         } catch (err) {
             console.log(err)
+            this.error = true
+            this.alert.show = true
+            this.alert.variant = 'danger'
+            this.alert.message = 'Une erreur est survenue, veuillez réessayer ulterieurement'
         }
     },
 
