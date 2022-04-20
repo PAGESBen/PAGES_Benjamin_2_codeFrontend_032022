@@ -95,7 +95,8 @@
                             <b-icon 
                                 tabindex="0" 
                                 class="hover-animation" 
-                                role="checkbox" 
+                                role="checkbox"
+                                aria-label="Ajouter ou supprimer un like"
                                 :aria-checked="post.mylikes == 1 ? true : false" 
                                 :icon="post.mylikes == 1 ? 'heart-fill' : 'heart'" 
                                 variant="danger" 

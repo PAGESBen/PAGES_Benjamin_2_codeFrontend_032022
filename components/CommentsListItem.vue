@@ -79,6 +79,7 @@
                 tabindex="0"
                 class="hover-animation pl-1"
                 role="checkbox"
+                aria-label="Ajouter ou supprimer un like"
                 :aria-checked="comment.mylikes == 1 ? true : false"
                 :icon="comment.mylikes ? 'heart-fill' : 'heart'" 
                 variant="secondary" 
