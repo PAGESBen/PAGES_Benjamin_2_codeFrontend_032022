@@ -1,14 +1,3 @@
-if(process.client) {
-  let user = localStorage.getItem('user');
-  if (!user) {
-    user = {
-      userId : -2,
-      token : '', 
-      admin : false
-    }
-  }
-}
-
 export const state = () => ({
     status : '',
     user :{

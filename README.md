@@ -14,6 +14,9 @@ $ npm install
 ## Demarer l'application
 $ npm run dev
 
+## URL
+http://localhost:3000/
+
 # API
 L'application utilise une API
 L'API s'execute en mode développement en local sur le port 3001 
