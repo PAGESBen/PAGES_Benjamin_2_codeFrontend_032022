@@ -76,20 +76,35 @@ export default {
         ...mapState(['user'])
     },
 
-    mounted() {
-        if(process.client) {
-            let stored = localStorage.getItem('user')
-            if(stored) {
-                this.$store.commit('STORE_USER', JSON.parse(stored))
-                this.$axios.setHeader('Authorization', 'Bearer ' + this.user.token) 
-            } else {
-                let user = {
-                    userId : -1, 
-                    token : '', 
-                    admin : false
+    async mounted() {
+        try {
+            if(process.client) {
+                let stored = localStorage.getItem('user')
+                if(stored) {
+                    let user = JSON.parse(stored)
+                    this.$axios.setHeader('Authorization', 'Bearer ' + user.token)
+                    await this.$axios.get('/auth')
+                    this.$store.commit('STORE_USER', user)
+                } else {
+                    let user = {
+                        userId : -1, 
+                        token : '', 
+                        admin : false
+                    }
+                    this.$store.commit('STORE_USER', user)
                 }
-                this.$store.commit('STORE_USER', user)
+            } 
+        } catch (e) {
+            console.log(e)
+            let user = {
+                userId : -1, 
+                token : '', 
+                admin : false
             }
+            if(process.client) {
+                localStorage.removeItem('user')
+            }
+            this.$store.commit('STORE_USER', user)
         }
     }
 }
